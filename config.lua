@@ -12,9 +12,36 @@ vim.opt.relativenumber = true
 lvim.log.level = "info"
 lvim.format_on_save = {
   enabled = true,
-  pattern = "*.lua",
-  timeout = 1000,
+  -- pattern = "*.lua",
+  timeout = 8000,
 }
+
+local formatters = require("lvim.lsp.null-ls.formatters")
+local linters = require("lvim.lsp.null-ls.linters")
+
+formatters.setup({
+  {
+    exe = "eslint",
+    filetypes = {
+      "javascriptreact",
+      "javascript",
+      "typescriptreact",
+      "typescript",
+    },
+  },
+})
+
+linters.setup({
+  {
+    exe = "eslint",
+    filetypes = {
+      "javascriptreact",
+      "javascript",
+      "typescriptreact",
+      "typescript",
+    },
+  },
+})
 -- to disable icons and use a minimalist setup, uncomment the following
 -- lvim.use_icons = false
 
@@ -22,6 +49,8 @@ lvim.format_on_save = {
 lvim.leader = "space"
 -- add your own keymapping
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
+lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
+lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
 
 lvim.builtin.which_key.mappings["j"] = {
   name = "HopWord",
@@ -34,7 +63,26 @@ lvim.builtin.which_key.mappings["j"] = {
 lvim.builtin.which_key.mappings["D"] = { "<cmd>DiffviewOpen<cr>", "DiffviewOpen" }
 lvim.builtin.which_key.mappings[" "] = {
   name = "DiffviewOpen",
-  D = { "<cmd>DiffviewClose<cr>", "DiffviewClose" }
+  D = { "<cmd>DiffviewClose<cr>", "DiffviewClose" },
+}
+
+-- 会话相关快捷键
+lvim.builtin.which_key.mappings["S"] = {
+  name = "Session",
+  c = { "<cmd>lua require('persistence').load()<cr>", "Restore last session for current dir" },
+  l = { "<cmd>lua require('persistence').load({ last = true })<cr>", "Restore last session" },
+  Q = { "<cmd>lua requir('persistence').stop()<cr>", "Quit without saving session" },
+}
+
+-- 错误显示快捷键
+lvim.builtin.which_key.mappings["t"] = {
+  name = "Diagnostics",
+  t = { "<cmd>TroubleToggle<cr>", "trouble" },
+  w = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "workspace" },
+  d = { "<cmd>TroubleToggle document_diagnostics<cr>", "document" },
+  q = { "<cmd>TroubleToggle quickfix<cr>", "quickfix" },
+  l = { "<cmd>TroubleToggle loclist<cr>", "loclist" },
+  r = { "<cmd>TroubleToggle lsp_references<cr>", "references" },
 }
 
 -- lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
@@ -57,25 +105,6 @@ lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
 -- Automatically install missing parsers when entering buffer
 lvim.builtin.treesitter.auto_install = true
 
-
--- 会话相关快捷键
-lvim.builtin.which_key.mappings["S"] = {
-  name = "Session",
-  c = { "<cmd>lua require('persistence').load()<cr>", "Restore last session for current dir" },
-  l = { "<cmd>lua require('persistence').load({ last = true })<cr>", "Restore last session" },
-  Q = { "<cmd>lua require('persistence').stop()<cr>", "Quit without saving session" },
-}
-
--- 错误显示快捷键
-lvim.builtin.which_key.mappings["t"] = {
-  name = "Diagnostics",
-  t = { "<cmd>TroubleToggle<cr>", "trouble" },
-  w = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "workspace" },
-  d = { "<cmd>TroubleToggle document_diagnostics<cr>", "document" },
-  q = { "<cmd>TroubleToggle quickfix<cr>", "quickfix" },
-  l = { "<cmd>TroubleToggle loclist<cr>", "loclist" },
-  r = { "<cmd>TroubleToggle lsp_references<cr>", "references" },
-}
 -- lvim.builtin.treesitter.ignore_install = { "haskell" }
 
 -- -- generic LSP settings <https://www.lunarvim.org/docs/languages#lsp-support>
@@ -138,16 +167,26 @@ end
 lvim.plugins = {
   {
     "catppuccin/nvim",
-    as = "catppuccin"
+    as = "catppuccin",
+  },
+  {
+    "folke/persistence.nvim",
+    event = "BufReadPre", -- this will only start session saving when an actual file was opened
+    module = "persistence",
+    config = function()
+      require("persistence").setup({
+        dir = vim.fn.expand(vim.fn.stdpath("config") .. "/session/"),
+        options = { "buffers", "curdir", "tabpages", "winsize" },
+      })
+    end,
   },
   {
     "karb94/neoscroll.nvim",
     event = "WinScrolled",
     config = function()
-      require('neoscroll').setup({
+      require("neoscroll").setup({
         -- All these keys will be mapped to their corresponding default scrolling animation
-        mappings = { '<C-u>', '<C-d>', '<C-b>', '<C-f>',
-          '<C-y>', '<C-e>', 'zt', 'zz', 'zb' },
+        mappings = { "<C-u>", "<C-d>", "<C-b>", "<C-f>", "<C-y>", "<C-e>", "zt", "zz", "zb" },
         hide_cursor = true, -- Hide cursor while scrolling
         stop_eof = true, -- Stop at <EOF> when scrolling downwards
         use_local_scrolloff = false, -- Use the local scope of scrolloff instead of the global scope
@@ -157,7 +196,7 @@ lvim.plugins = {
         pre_hook = nil, -- Function to run before the scrolling animation starts
         post_hook = nil, -- Function to run after the scrolling animation ends
       })
-    end
+    end,
   },
   {
     "tpope/vim-surround",
@@ -182,31 +221,33 @@ lvim.plugins = {
   {
     "simrat39/symbols-outline.nvim",
     config = function()
-      require('symbols-outline').setup()
-    end
+      require("symbols-outline").setup()
+    end,
   },
   {
     "ray-x/lsp_signature.nvim",
     event = "BufRead",
-    config = function() require "lsp_signature".on_attach() end,
+    config = function()
+      require("lsp_signature").on_attach()
+    end,
   },
   {
     "rmagatti/goto-preview",
     config = function()
-      require('goto-preview').setup {
-        width = 120; -- Width of the floating window
-        height = 25; -- Height of the floating window
-        default_mappings = false; -- Bind default mappings
-        debug = false; -- Print debug information
-        opacity = nil; -- 0-100 opacity level of the floating window where 100 is fully transparent.
-        post_open_hook = nil -- A function taking two arguments, a buffer and a window to be ran as a hook.
+      require("goto-preview").setup({
+        width = 120, -- Width of the floating window
+        height = 25, -- Height of the floating window
+        default_mappings = false, -- Bind default mappings
+        debug = false, -- Print debug information
+        opacity = nil, -- 0-100 opacity level of the floating window where 100 is fully transparent.
+        post_open_hook = nil, -- A function taking two arguments, a buffer and a window to be ran as a hook.
         -- You can use "default_mappings = true" setup option
         -- Or explicitly set keybindings
         -- vim.cmd("nnoremap gpd <cmd>lua require('goto-preview').goto_preview_definition()<CR>")
         -- vim.cmd("nnoremap gpi <cmd>lua require('goto-preview').goto_preview_implementation()<CR>")
         -- vim.cmd("nnoremap gP <cmd>lua require('goto-preview').close_all_win()<CR>")
-      }
-    end
+      })
+    end,
   },
   {
     "norcalli/nvim-colorizer.lua",
@@ -223,24 +264,24 @@ lvim.plugins = {
     end,
   },
   { "kkharji/sqlite.lua" },
-  {
-    "ahmedkhalf/project.nvim",
-    opt = true,
-    after = "telescope.nvim",
-    config = function()
-      require("project_nvim").setup({
-        manual_mode = false,
-        detection_methods = { "lsp", "pattern" },
-        patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json" },
-        ignore_lsp = { "efm", "copilot" },
-        exclude_dirs = {},
-        show_hidden = false,
-        silent_chdir = true,
-        scope_chdir = "global",
-        datapath = vim.fn.stdpath("data"),
-      })
-    end
-  },
+  -- {
+  --   "ahmedkhalf/project.nvim",
+  --   opt = true,
+  --   after = "telescope.nvim",
+  --   config = function()
+  --     require("project_nvim").setup({
+  --       manual_mode = false,
+  --       detection_methods = { "lsp", "pattern" },
+  --       patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json" },
+  --       ignore_lsp = { "efm", "copilot" },
+  --       exclude_dirs = {},
+  --       show_hidden = false,
+  --       silent_chdir = true,
+  --       scope_chdir = "global",
+  --       datapath = vim.fn.stdpath("data"),
+  --     })
+  --   end,
+  -- },
   {
     "nvim-telescope/telescope-fzy-native.nvim",
     run = "make",
@@ -250,7 +291,8 @@ lvim.plugins = {
   {
     "nvim-telescope/telescope-frecency.nvim",
     opt = true,
-    after = "telescope-fzf-native.nvim", requires = { { "kkharji/sqlite.lua", opt = true } },
+    after = "telescope-fzf-native.nvim",
+    requires = { { "kkharji/sqlite.lua", opt = true } },
   },
   {
     "jvgrootveld/telescope-zoxide",
@@ -268,10 +310,10 @@ lvim.plugins = {
       require("nvim-ts-autotag").setup()
     end,
   },
-  {
-    "sindrets/diffview.nvim",
-    event = "BufRead",
-  },
+  -- {
+  --   "sindrets/diffview.nvim",
+  --   event = "BufRead",
+  -- },
   {
     "kevinhwang91/nvim-bqf",
     event = { "BufRead", "BufNew" },
@@ -303,8 +345,6 @@ lvim.plugins = {
     event = "BufRead",
     config = function()
       require("hop").setup()
-      vim.api.nvim_set_keymap("n", "s", ":HopChar2<cr>", { silent = true })
-      vim.api.nvim_set_keymap("n", "S", ":HopWord<cr>", { silent = true })
     end,
   },
   {
@@ -375,7 +415,7 @@ lvim.plugins = {
     "sindrets/diffview.nvim",
     opt = true,
     cmd = { "DiffviewOpen", "DiffviewClose" },
-  }
+  },
 }
 
 -- -- Autocommands (`:help autocmd`) <https://neovim.io/doc/user/autocmd.html>
@@ -388,8 +428,7 @@ lvim.plugins = {
 -- })
 --
 
-
 lvim.transparent_window = true
-lvim.colorscheme = 'catppuccin-mocha'
+lvim.colorscheme = "catppuccin-mocha"
 lvim.builtin.treesitter.rainbow.enable = true
 lvim.builtin.treesitter.rainbow.max_file_lines = 5000
