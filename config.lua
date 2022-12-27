@@ -7,6 +7,9 @@
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 vim.opt.relativenumber = true
+vim.opt.list = true
+vim.opt.listchars:append "space:⋅"
+vim.opt.listchars:append "eol:↴"
 
 -- general
 lvim.log.level = "info"
@@ -51,6 +54,7 @@ lvim.leader = "space"
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
 lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
+-- lvim.keys.normal_mode["n|;"] = "<cmd>v:lua.enhance_ft_move(';')"
 
 lvim.builtin.which_key.mappings["j"] = {
   name = "HopWord",
@@ -282,12 +286,12 @@ lvim.plugins = {
   --     })
   --   end,
   -- },
-  {
-    "nvim-telescope/telescope-fzy-native.nvim",
-    run = "make",
-    event = "BufRead",
-    after = "project.nvim",
-  },
+  -- {
+  --   "nvim-telescope/telescope-fzy-native.nvim",
+  --   run = "make",
+  --   event = "BufRead",
+  --   after = "project.nvim",
+  -- },
   {
     "nvim-telescope/telescope-frecency.nvim",
     opt = true,
@@ -307,7 +311,16 @@ lvim.plugins = {
   {
     "windwp/nvim-ts-autotag",
     config = function()
-      require("nvim-ts-autotag").setup()
+      require("nvim-ts-autotag").setup({
+        filetypes = {
+          "html",
+          "xml",
+          "javascript",
+          "typescriptreact",
+          "javascriptreact",
+          "vue",
+        },
+      })
     end,
   },
   -- {
@@ -415,6 +428,64 @@ lvim.plugins = {
     "sindrets/diffview.nvim",
     opt = true,
     cmd = { "DiffviewOpen", "DiffviewClose" },
+  },
+  { 'nvim-treesitter/nvim-treesitter-textobjects' },
+  {
+    "folke/trouble.nvim",
+    cmd = "TroubleToggle",
+  },
+  { 'lukas-reineke/indent-blankline.nvim',
+    config = function()
+      require("indent_blankline").setup {
+        space_char_blankline = " ",
+        show_current_context = true,
+        show_current_context_start = true,
+
+      }
+    end,
+  }
+}
+
+-- Treesitter
+local ts = lvim.builtin.treesitter
+ts.textobjects = {
+  select = {
+    enable = true,
+    -- Automatically jump forward to textobj, similar to targets.vim
+    lookahead = true,
+    keymaps = {
+      -- You can use the capture groups defined in textobjects.scm
+      ['aa'] = '@parameter.outer',
+      ['ia'] = '@parameter.inner',
+      ["af"] = "@function.outer",
+      ["if"] = "@function.inner",
+      ["ac"] = "@class.outer",
+      ["ic"] = "@class.inner",
+    },
+  },
+  move = {
+    enable = true,
+    set_jumps = true, -- whether to set jumps in the jumplist
+    goto_next_start = {
+      ["]["] = "@function.outer",
+      ["]m"] = "@class.outer",
+    },
+    goto_next_end = {
+      ["]]"] = "@function.outer",
+      ["]M"] = "@class.outer",
+    },
+    goto_previous_start = {
+      ["[["] = "@function.outer",
+      ["[m"] = "@class.outer",
+    },
+    goto_previous_end = {
+      ["[]"] = "@function.outer",
+      ["[M"] = "@class.outer",
+    },
+  },
+  swap = {
+    enable = false,
+    -- swap_next = textobj_swap_keymaps,
   },
 }
 
