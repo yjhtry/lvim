@@ -15,7 +15,7 @@ vim.opt.listchars:append "eol:↴"
 lvim.log.level = "info"
 lvim.format_on_save = {
   enabled = true,
-  -- pattern = "*.lua",
+  pattern = "*.lua,*.js,*.tsx,*.ts",
   timeout = 8000,
 }
 
@@ -24,7 +24,7 @@ local linters = require("lvim.lsp.null-ls.linters")
 
 formatters.setup({
   {
-    exe = "eslint",
+    exe = "prettier",
     filetypes = {
       "javascriptreact",
       "javascript",
@@ -54,15 +54,8 @@ lvim.leader = "space"
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
 lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
--- lvim.keys.normal_mode["n|;"] = "<cmd>v:lua.enhance_ft_move(';')"
+lvim.keys.normal_mode["<C-c>"] = "ESC"
 
-lvim.builtin.which_key.mappings["j"] = {
-  name = "HopWord",
-  j = { "<cmd>HopWord<cr>", "HopWord" },
-  k = { "<cmd>HopChar1<cr>", "HopChar1" },
-  f = { "<cmd>HopChar2<cr>", "HopChar2" },
-  l = { "<cmd>HopLine<cr>", "HopLine" },
-}
 
 lvim.builtin.which_key.mappings["D"] = { "<cmd>DiffviewOpen<cr>", "DiffviewOpen" }
 lvim.builtin.which_key.mappings[" "] = {
@@ -89,12 +82,10 @@ lvim.builtin.which_key.mappings["t"] = {
   r = { "<cmd>TroubleToggle lsp_references<cr>", "references" },
 }
 
--- lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
--- lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
 
 -- -- Use which-key to add extra bindings with the leader-key prefix
--- lvim.builtin.which_key.mappings["W"] = { "<cmd>noautocmd w<cr>", "Save without formatting" }
--- lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
+lvim.builtin.which_key.mappings["W"] = { "<cmd>noautocmd w<cr>", "Save without formatting" }
+lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
 
 -- -- Change theme settings
 -- lvim.colorscheme = "lunar"
@@ -109,56 +100,7 @@ lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
 -- Automatically install missing parsers when entering buffer
 lvim.builtin.treesitter.auto_install = true
 
--- lvim.builtin.treesitter.ignore_install = { "haskell" }
-
--- -- generic LSP settings <https://www.lunarvim.org/docs/languages#lsp-support>
-
--- --- disable automatic installation of servers
--- lvim.lsp.installer.setup.automatic_installation = false
-
--- ---configure a server manually. IMPORTANT: Requires `:LvimCacheReset` to take effect
--- ---see the full default list `:lua =lvim.lsp.automatic_configuration.skipped_servers`
--- vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "pyright" })
--- local opts = {} -- check the lspconfig documentation for a list of all possible options
--- require("lvim.lsp.manager").setup("pyright", opts)
-
--- ---remove a server from the skipped list, e.g. eslint, or emmet_ls. IMPORTANT: Requires `:LvimCacheReset` to take effect
--- ---`:LvimInfo` lists which server(s) are skipped for the current filetype
--- lvim.lsp.automatic_configuration.skipped_servers = vim.tbl_filter(function(server)
---   return server ~= "emmet_ls"
--- end, lvim.lsp.automatic_configuration.skipped_servers)
-
--- -- you can set a custom on_attach function that will be used for all the language servers
--- -- See <https://github.com/neovim/nvim-lspconfig#keybindings-and-completion>
--- lvim.lsp.on_attach_callback = function(client, bufnr)
---   local function buf_set_option(...)
---     vim.api.nvim_buf_set_option(bufnr, ...)
---   end
---   --Enable completion triggered by <c-x><c-o>
---   buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
--- end
-
--- -- linters and formatters <https://www.lunarvim.org/docs/languages#lintingformatting>
--- local formatters = require "lvim.lsp.null-ls.formatters"
--- formatters.setup {
---   { command = "stylua" },
---   {
---     command = "prettier",
---     extra_args = { "--print-width", "100" },
---     filetypes = { "typescript", "typescriptreact" },
---   },
--- }
--- local linters = require "lvim.lsp.null-ls.linters"
--- linters.setup {
---   { command = "flake8", filetypes = { "python" } },
---   {
---     command = "shellcheck",
---     args = { "--severity", "warning" },
---   },
--- }
-
 lvim.builtin.telescope.on_config_done = function(telescope)
-  pcall(telescope.load_extension, "fzf")
   pcall(telescope.load_extension, "projects")
   pcall(telescope.load_extension, "zoxide")
   pcall(telescope.load_extension, "frecency")
@@ -204,11 +146,6 @@ lvim.plugins = {
   },
   {
     "tpope/vim-surround",
-
-    -- make sure to change the value of `timeoutlen` if it's not triggering correctly, see https://github.com/tpope/vim-surround/issues/117
-    -- setup = function()
-    --  vim.o.timeoutlen = 500
-    -- end
   },
   {
     "iamcco/markdown-preview.nvim",
@@ -229,19 +166,12 @@ lvim.plugins = {
     end,
   },
   {
-    "ray-x/lsp_signature.nvim",
-    event = "BufRead",
-    config = function()
-      require("lsp_signature").on_attach()
-    end,
-  },
-  {
     "rmagatti/goto-preview",
     config = function()
       require("goto-preview").setup({
         width = 120, -- Width of the floating window
         height = 25, -- Height of the floating window
-        default_mappings = false, -- Bind default mappings
+        default_mappings = true, -- Bind default mappings
         debug = false, -- Print debug information
         opacity = nil, -- 0-100 opacity level of the floating window where 100 is fully transparent.
         post_open_hook = nil, -- A function taking two arguments, a buffer and a window to be ran as a hook.
@@ -268,30 +198,6 @@ lvim.plugins = {
     end,
   },
   { "kkharji/sqlite.lua" },
-  -- {
-  --   "ahmedkhalf/project.nvim",
-  --   opt = true,
-  --   after = "telescope.nvim",
-  --   config = function()
-  --     require("project_nvim").setup({
-  --       manual_mode = false,
-  --       detection_methods = { "lsp", "pattern" },
-  --       patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json" },
-  --       ignore_lsp = { "efm", "copilot" },
-  --       exclude_dirs = {},
-  --       show_hidden = false,
-  --       silent_chdir = true,
-  --       scope_chdir = "global",
-  --       datapath = vim.fn.stdpath("data"),
-  --     })
-  --   end,
-  -- },
-  -- {
-  --   "nvim-telescope/telescope-fzy-native.nvim",
-  --   run = "make",
-  --   event = "BufRead",
-  --   after = "project.nvim",
-  -- },
   {
     "nvim-telescope/telescope-frecency.nvim",
     opt = true,
@@ -323,10 +229,6 @@ lvim.plugins = {
       })
     end,
   },
-  -- {
-  --   "sindrets/diffview.nvim",
-  --   event = "BufRead",
-  -- },
   {
     "kevinhwang91/nvim-bqf",
     event = { "BufRead", "BufNew" },
@@ -351,29 +253,6 @@ lvim.plugins = {
           },
         },
       })
-    end,
-  },
-  {
-    "phaazon/hop.nvim",
-    event = "BufRead",
-    config = function()
-      require("hop").setup()
-    end,
-  },
-  {
-    "rhysd/clever-f.vim",
-    opt = true,
-    event = "BufReadPost",
-    config = function()
-      vim.api.nvim_set_hl(
-        0,
-        "CleverChar",
-        { underline = true, bold = true, fg = "Orange", bg = "NONE", ctermfg = "Red", ctermbg = "NONE" }
-      )
-      vim.g.clever_f_mark_char_color = "CleverChar"
-      vim.g.clever_f_mark_direct_color = "CleverChar"
-      vim.g.clever_f_mark_direct = true
-      vim.g.clever_f_timeout_ms = 1500
     end,
   },
   {
@@ -434,20 +313,35 @@ lvim.plugins = {
     "folke/trouble.nvim",
     cmd = "TroubleToggle",
   },
-  { 'lukas-reineke/indent-blankline.nvim',
+  {
+    "ggandor/leap.nvim",
+    event = "BufRead",
     config = function()
-      require("indent_blankline").setup {
-        space_char_blankline = " ",
-        show_current_context = true,
-        show_current_context_start = true,
-
+      require('leap').add_default_mappings()
+    end
+  },
+  {
+    "ggandor/flit.nvim",
+    event = "BufRead",
+    config = function()
+      require('flit').setup {
+        keys = { f = 'f', F = 'F', t = 't', T = 'T' },
+        -- A string like "nv", "nvo", "o", etc.
+        labeled_modes = "v",
+        multiline = true,
+        -- Like `leap`s similar argument (call-specific overrides).
+        -- E.g.: opts = { equivalence_classes = {} }
+        opts = {}
       }
-    end,
-  }
+    end
+  },
 }
 
 -- Treesitter
 local ts = lvim.builtin.treesitter
+
+ts.autotag = { enable = true }
+
 ts.textobjects = {
   select = {
     enable = true,
@@ -500,6 +394,6 @@ ts.textobjects = {
 --
 
 lvim.transparent_window = true
-lvim.colorscheme = "catppuccin-mocha"
+lvim.colorscheme = "tokyonight-night"
 lvim.builtin.treesitter.rainbow.enable = true
 lvim.builtin.treesitter.rainbow.max_file_lines = 5000
