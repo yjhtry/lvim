@@ -55,9 +55,25 @@ lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
 lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
 lvim.keys.normal_mode["<C-c>"] = "ESC"
+lvim.keys.normal_mode["<CR>"] = "o<ESC>"
+lvim.keys.normal_mode["<S-CR>"] = "O<ESC>"
 
 
 lvim.builtin.which_key.mappings["D"] = { "<cmd>DiffviewOpen<cr>", "DiffviewOpen" }
+lvim.builtin.which_key.mappings["ss"] = { "<cmd>Telescope<cr>", "Telescope" }
+lvim.builtin.which_key.mappings["sb"] = { "<cmd>Telescope buffers<cr>", "Buffers" }
+lvim.builtin.which_key.mappings["sw"] = { "<cmd>Telescope live_grep<cr>", "live Word" }
+lvim.builtin.which_key.mappings["sc"] = { "<cmd>Telescope grep_string<cr>", "Cursor Word" }
+
+lvim.builtin.which_key.mappings["f"] = {
+  name = "Local search",
+  f = { "<cmd>Telescope git_files<cr>", "Git File" },
+  w = { "<cmd>Telescope current_buffer_fuzzy_find<cr>", "Local Word" },
+  r = { "<cmd>Telescope lsp_references<cr>", "References" },
+  s = { "<cmd>Telescope lsp_document_symbols<cr>", "Symbols" },
+}
+
+
 lvim.builtin.which_key.mappings[" "] = {
   name = "DiffviewOpen",
   D = { "<cmd>DiffviewClose<cr>", "DiffviewClose" },
@@ -313,6 +329,19 @@ lvim.plugins = {
     "folke/trouble.nvim",
     cmd = "TroubleToggle",
   },
+  -- { "rhysd/clever-f.vim", opt = true,
+  --   event = "BufReadPost",
+  --   config = function()
+  --     vim.api.nvim_set_hl(
+  --       0,
+  --       "CleverChar",
+  --       { underline = true, bold = true, fg = "Orange", bg = "NONE", ctermfg = "Red", ctermbg = "NONE" }
+  --     )
+  --     vim.g.clever_f_mark_char_color = "CleverChar"
+  --     vim.g.clever_f_mark_direct_color = "CleverChar"
+  --     vim.g.clever_f_mark_direct = true
+  --     vim.g.clever_f_timeout_ms = 1500
+  --   end },
   {
     "ggandor/leap.nvim",
     event = "BufRead",
@@ -335,6 +364,7 @@ lvim.plugins = {
       }
     end
   },
+  { "tpope/vim-repeat" }
 }
 
 -- Treesitter
