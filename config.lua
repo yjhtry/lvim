@@ -60,6 +60,7 @@ lvim.keys.normal_mode["<S-CR>"] = "O<ESC>"
 
 
 lvim.builtin.which_key.mappings["D"] = { "<cmd>DiffviewOpen<cr>", "DiffviewOpen" }
+lvim.builtin.which_key.mappings["u"] = { "<cmd>Telescope undo<cr>", "Undo" }
 lvim.builtin.which_key.mappings["ss"] = { "<cmd>Telescope<cr>", "Telescope" }
 lvim.builtin.which_key.mappings["sb"] = { "<cmd>Telescope buffers<cr>", "Buffers" }
 lvim.builtin.which_key.mappings["sw"] = { "<cmd>Telescope live_grep<cr>", "live Word" }
@@ -122,6 +123,7 @@ lvim.builtin.telescope.on_config_done = function(telescope)
   pcall(telescope.load_extension, "frecency")
   pcall(telescope.load_extension, "live_grep_args")
   pcall(telescope.load_extension, "neoclip")
+  pcall(telescope.load_extension, "undo")
   -- any other extensions loading
 end
 
@@ -364,7 +366,8 @@ lvim.plugins = {
       }
     end
   },
-  { "tpope/vim-repeat" }
+  { "tpope/vim-repeat" },
+  { "debugloop/telescope-undo.nvim" }
 }
 
 -- Treesitter
@@ -410,6 +413,14 @@ ts.textobjects = {
   swap = {
     enable = false,
     -- swap_next = textobj_swap_keymaps,
+  },
+}
+
+local telescope = lvim.builtin.telescope
+telescope.extensions.undo = {
+  side_by_side = true,
+  layout_config = {
+    preview_height = 0.8,
   },
 }
 
