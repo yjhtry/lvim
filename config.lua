@@ -19,6 +19,9 @@ lvim.format_on_save = {
   timeout = 8000,
 }
 
+lvim.builtin.gitsigns.opts.current_line_blame = true
+
+
 local formatters = require("lvim.lsp.null-ls.formatters")
 local linters = require("lvim.lsp.null-ls.linters")
 
@@ -61,8 +64,8 @@ lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
 lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
 lvim.keys.normal_mode["<C-c>"] = "ESC"
-lvim.keys.normal_mode["<CR>"] = "o<ESC>"
-lvim.keys.normal_mode["<S-CR>"] = "O<ESC>"
+-- lvim.keys.normal_mode["<CR>"] = "o<ESC>"
+-- lvim.keys.normal_mode["<S-CR>"] = "O<ESC>"
 
 
 lvim.builtin.which_key.mappings["D"] = { "<cmd>DiffviewOpen<cr>", "DiffviewOpen" }
@@ -71,6 +74,7 @@ lvim.builtin.which_key.mappings["ss"] = { "<cmd>Telescope<cr>", "Telescope" }
 lvim.builtin.which_key.mappings["sb"] = { "<cmd>Telescope buffers<cr>", "Buffers" }
 lvim.builtin.which_key.mappings["sw"] = { "<cmd>Telescope live_grep<cr>", "live Word" }
 lvim.builtin.which_key.mappings["sc"] = { "<cmd>Telescope grep_string<cr>", "Cursor Word" }
+lvim.builtin.which_key.mappings["n"] = { "<cmd>enew<cr>", "New File" }
 
 lvim.builtin.which_key.mappings["f"] = {
   name = "Local search",
@@ -378,7 +382,7 @@ lvim.plugins = {
     local c = require('vscode.colors')
     require('vscode').setup({
       -- Enable transparent background
-      transparent = true,
+      -- transparent = true,
 
       -- Enable italic comment
       italic_comments = true,
@@ -389,7 +393,7 @@ lvim.plugins = {
       -- Override colors (see ./lua/vscode/colors.lua)
       color_overrides = {
         -- vscLineNumber = '#FFFFFF',
-        vscBack = '#1E1E1E',
+        vscBack = '#151515',
       },
 
       -- Override highlight groups (see ./lua/vscode/theme.lua)
@@ -467,7 +471,7 @@ telescope.extensions.undo = {
 -- })
 --
 
--- lvim.transparent_window = true
+-- lvim.transparent_window = false
 lvim.colorscheme = "vscode"
 lvim.builtin.treesitter.rainbow.enable = true
 lvim.builtin.treesitter.rainbow.max_file_lines = 5000
