@@ -15,7 +15,7 @@ vim.opt.listchars:append "eol:↴"
 lvim.log.level = "info"
 lvim.format_on_save = {
   enabled = true,
-  pattern = "*.lua,*.js,*.tsx,*.ts",
+  pattern = "*.lua,*.js,*.tsx,*.ts,*.rs",
   timeout = 8000,
 }
 
@@ -32,6 +32,12 @@ formatters.setup({
       "typescript",
     },
   },
+  {
+    exe = "rustfmt",
+    filetypes = {
+      "rust",
+    }
+  }
 })
 
 linters.setup({
@@ -367,7 +373,34 @@ lvim.plugins = {
     end
   },
   { "tpope/vim-repeat" },
-  { "debugloop/telescope-undo.nvim" }
+  { "debugloop/telescope-undo.nvim" },
+  { "Mofiqul/vscode.nvim", config = function()
+    local c = require('vscode.colors')
+    require('vscode').setup({
+      -- Enable transparent background
+      transparent = true,
+
+      -- Enable italic comment
+      italic_comments = true,
+
+      -- Disable nvim-tree background color
+      disable_nvimtree_bg = true,
+
+      -- Override colors (see ./lua/vscode/colors.lua)
+      color_overrides = {
+        -- vscLineNumber = '#FFFFFF',
+        vscBack = '#1E1E1E',
+      },
+
+      -- Override highlight groups (see ./lua/vscode/theme.lua)
+      group_overrides = {
+        -- this supports the same val table as vim.api.nvim_set_hl
+        -- use colors from this colorscheme by requiring vscode.colors!
+        Cursor = { fg = c.vscDarkBlue, bg = c.vscLightGreen, bold = true },
+      }
+    })
+
+  end }
 }
 
 -- Treesitter
@@ -434,7 +467,7 @@ telescope.extensions.undo = {
 -- })
 --
 
-lvim.transparent_window = true
-lvim.colorscheme = "tokyonight-night"
+-- lvim.transparent_window = true
+lvim.colorscheme = "vscode"
 lvim.builtin.treesitter.rainbow.enable = true
 lvim.builtin.treesitter.rainbow.max_file_lines = 5000
