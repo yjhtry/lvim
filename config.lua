@@ -8,7 +8,7 @@ vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 vim.opt.relativenumber = true
 vim.opt.list = true
-vim.opt.listchars:append "space:⋅"
+-- vim.opt.listchars:append "space:⋅"
 vim.opt.listchars:append "eol:↴"
 
 -- general
@@ -20,6 +20,7 @@ lvim.format_on_save = {
 }
 
 lvim.builtin.gitsigns.opts.current_line_blame = true
+-- lvim.builtin.cmp.active = false
 
 
 local formatters = require("lvim.lsp.null-ls.formatters")
@@ -215,7 +216,7 @@ lvim.plugins = {
   {
     "norcalli/nvim-colorizer.lua",
     config = function()
-      require("colorizer").setup({ "css", "scss", "html", "javascript" }, {
+      require("colorizer").setup({ "css", "scss", "less", "html", "javascript" }, {
         RGB = true, -- #RGB hex codes
         RRGGBB = true, -- #RRGGBB hex codes
         RRGGBBAA = true, -- #RRGGBBAA hex codes
@@ -342,19 +343,6 @@ lvim.plugins = {
     "folke/trouble.nvim",
     cmd = "TroubleToggle",
   },
-  -- { "rhysd/clever-f.vim", opt = true,
-  --   event = "BufReadPost",
-  --   config = function()
-  --     vim.api.nvim_set_hl(
-  --       0,
-  --       "CleverChar",
-  --       { underline = true, bold = true, fg = "Orange", bg = "NONE", ctermfg = "Red", ctermbg = "NONE" }
-  --     )
-  --     vim.g.clever_f_mark_char_color = "CleverChar"
-  --     vim.g.clever_f_mark_direct_color = "CleverChar"
-  --     vim.g.clever_f_mark_direct = true
-  --     vim.g.clever_f_timeout_ms = 1500
-  --   end },
   {
     "ggandor/leap.nvim",
     event = "BufRead",
@@ -379,33 +367,33 @@ lvim.plugins = {
   },
   { "tpope/vim-repeat" },
   { "debugloop/telescope-undo.nvim" },
-  { "Mofiqul/vscode.nvim", config = function()
-    local c = require('vscode.colors')
-    require('vscode').setup({
-      -- Enable transparent background
-      -- transparent = true,
+  -- { "Mofiqul/vscode.nvim", config = function()
+  --   local c = require('vscode.colors')
+  --   require('vscode').setup({
+  --     -- Enable transparent background
+  --     transparent = true,
 
-      -- Enable italic comment
-      italic_comments = true,
+  --     -- Enable italic comment
+  --     italic_comments = true,
 
-      -- Disable nvim-tree background color
-      disable_nvimtree_bg = true,
+  --     -- Disable nvim-tree background color
+  --     disable_nvimtree_bg = true,
 
-      -- Override colors (see ./lua/vscode/colors.lua)
-      color_overrides = {
-        -- vscLineNumber = '#FFFFFF',
-        vscBack = '#151515',
-      },
+  --     -- Override colors (see ./lua/vscode/colors.lua)
+  --     color_overrides = {
+  --       -- vscLineNumber = '#FFFFFF',
+  --       vscBack = '#151515',
+  --     },
 
-      -- Override highlight groups (see ./lua/vscode/theme.lua)
-      group_overrides = {
-        -- this supports the same val table as vim.api.nvim_set_hl
-        -- use colors from this colorscheme by requiring vscode.colors!
-        Cursor = { fg = c.vscDarkBlue, bg = c.vscLightGreen, bold = true },
-      }
-    })
+  --     -- Override highlight groups (see ./lua/vscode/theme.lua)
+  --     group_overrides = {
+  --       -- this supports the same val table as vim.api.nvim_set_hl
+  --       -- use colors from this colorscheme by requiring vscode.colors!
+  --       Cursor = { fg = c.vscDarkBlue, bg = c.vscLightGreen, bold = true },
+  --     }
+  --   })
 
-  end },
+  -- end },
   { "simrat39/rust-tools.nvim", config = function()
     require("rust-tools").setup({
       server = {
@@ -473,17 +461,7 @@ telescope.extensions.undo = {
   },
 }
 
--- -- Autocommands (`:help autocmd`) <https://neovim.io/doc/user/autocmd.html>
--- vim.api.nvim_create_autocmd("FileType", {
---   pattern = "zsh",
---   callback = function()
---     -- let treesitter use bash highlight for zsh files as well
---     require("nvim-treesitter.highlight").attach(0, "bash")
---   end,
--- })
---
-
--- lvim.transparent_window = false
-lvim.colorscheme = "vscode"
+lvim.transparent_window = true
+lvim.colorscheme = "catppuccin-mocha"
 lvim.builtin.treesitter.rainbow.enable = true
 lvim.builtin.treesitter.rainbow.max_file_lines = 5000
