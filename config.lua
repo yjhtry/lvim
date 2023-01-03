@@ -64,8 +64,8 @@ lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
 lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
 lvim.keys.normal_mode["<C-c>"] = "ESC"
--- lvim.keys.normal_mode["<CR>"] = "o<ESC>"
--- lvim.keys.normal_mode["<S-CR>"] = "O<ESC>"
+lvim.keys.normal_mode["[<space>"] = "o<ESC>"
+lvim.keys.normal_mode["]<space>"] = "O<ESC>"
 
 
 lvim.builtin.which_key.mappings["D"] = { "<cmd>DiffviewOpen<cr>", "DiffviewOpen" }
@@ -75,6 +75,7 @@ lvim.builtin.which_key.mappings["sb"] = { "<cmd>Telescope buffers<cr>", "Buffers
 lvim.builtin.which_key.mappings["sw"] = { "<cmd>Telescope live_grep<cr>", "live Word" }
 lvim.builtin.which_key.mappings["sc"] = { "<cmd>Telescope grep_string<cr>", "Cursor Word" }
 lvim.builtin.which_key.mappings["n"] = { "<cmd>enew<cr>", "New File" }
+lvim.builtin.which_key.mappings["o"] = { "<cmd>SymbolsOutline<cr>", "SymbolsOutline" }
 
 lvim.builtin.which_key.mappings["f"] = {
   name = "Local search",
@@ -404,6 +405,17 @@ lvim.plugins = {
       }
     })
 
+  end },
+  { "simrat39/rust-tools.nvim", config = function()
+    require("rust-tools").setup({
+      server = {
+        settings = {
+          ["rust-analyzer"] = {
+            inlayHints = { locationLinks = false },
+          },
+        },
+      },
+    })
   end }
 }
 
