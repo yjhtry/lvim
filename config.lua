@@ -15,12 +15,11 @@ vim.opt.listchars:append "eol:↴"
 lvim.log.level = "info"
 lvim.format_on_save = {
   enabled = true,
-  pattern = "*.lua,*.js,*.tsx,*.ts,*.rs",
+  pattern = "*.lua,*.js,*.tsx,*.ts,*.rs,*.json",
   timeout = 8000,
 }
 
 lvim.builtin.gitsigns.opts.current_line_blame = true
--- lvim.builtin.cmp.active = false
 
 
 local formatters = require("lvim.lsp.null-ls.formatters")

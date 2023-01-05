@@ -1,0 +1,40 @@
+{
+  "arruni": {
+    "prefix": "arruni",
+    "body": [
+      "let map = {};",
+      "let newList = [];",
+      "\narr.forEach(item => {",
+      "\tif (!map[item]) {",
+      "\t\tmap[item] = 1;",
+      "\t\tnewList.push(item);",
+      "\t}",
+      "})"
+    ],
+    "description": "数组简单去重"
+  },
+  "karruni": {
+    "prefix": "karruni",
+    "body": [
+      "let map = {};",
+      "let newList = [];",
+      "\narr.forEach(item => {",
+      "\tif (!map[item.key]) {",
+      "\t\tmap[item.key] = 1;",
+      "\t\tnewList.push(item);",
+      "\t}",
+      "})"
+    ],
+    "description": "对象数组简单去重"
+  },
+  "div": {
+    "prefix": "div",
+    "body": ["<div>", "\t$1", "</div>"],
+    "description": "HTML - Defines a section in a document"
+  },
+  "span": {
+    "prefix": "span",
+    "body": "<span>$1</span>$2",
+    "description": "HTML - Defines a section in a document"
+  }
+}
