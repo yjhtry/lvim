@@ -1,16 +1,7 @@
 {
   "arruni": {
     "prefix": "arruni",
-    "body": [
-      "let map = {};",
-      "let newList = [];",
-      "\narr.forEach(item => {",
-      "\tif (!map[item]) {",
-      "\t\tmap[item] = 1;",
-      "\t\tnewList.push(item);",
-      "\t}",
-      "})"
-    ],
+    "body": ["Array.from(new Set(data$0))"],
     "description": "数组简单去重"
   },
   "karruni": {
@@ -18,14 +9,68 @@
     "body": [
       "let map = {};",
       "let newList = [];",
-      "\narr.forEach(item => {",
-      "\tif (!map[item.key]) {",
-      "\t\tmap[item.key] = 1;",
+      "\narr$1.forEach(item => {",
+      "\tif (!map[item.key$2]) {",
+      "\t\tmap[item.key$3] = 1;",
       "\t\tnewList.push(item);",
       "\t}",
       "})"
     ],
     "description": "对象数组简单去重"
+  },
+  "arrtomap": {
+    "prefix": "arrtomap",
+    "body": [
+      "$1data.reduce((acc, curr) => {",
+      "\tacc[curr.key$2] = curr.value;",
+      "\treturn acc;",
+      "}, {});$3"
+    ]
+  },
+  "lreq": {
+    "prefix": "lreq",
+    "body": [
+      "const handleOk$1 = async () => {",
+      "\ttry {",
+      "\t\tif (loading) return;",
+      "\t\t\tsetLoading(true);",
+      "\t\t\tconst res = await todo().finally(() =>",
+      "\t\t\tsetLoading(false),",
+      "\t\t);",
+      "\t\tif (res && res.code === 20000 && res.data) {",
+      "\t\t\tmessage.success('成功！');",
+      "\t\t} else {",
+      "\t\t\tmessage.error(res.message || '失败！', 6);",
+      "\t\t}",
+      "\t} catch (error) {",
+      "\t\tif (error instanceof Error) {",
+      "\t\t\tmessage.error(error.message || '失败！', 6);",
+      "\t\t}",
+      "\t}",
+      "};"
+    ],
+    "description": "一般的request请求处理 包含loading"
+  },
+  "nlreq": {
+    "prefix": "nlreq",
+    "body": [
+      "const handleOk$1 = async () => {",
+      "\ttry {",
+      "\t\t\tconst res = await todo({ });",
+      "\t\t);",
+      "\t\tif (res && res.code === 20000 && res.data) {",
+      "\t\t\tmessage.success('成功！');",
+      "\t\t} else {",
+      "\t\t\tmessage.error(res.message || '失败！', 6);",
+      "\t\t}",
+      "\t} catch (error) {",
+      "\t\tif (error instanceof Error) {",
+      "\t\t\tmessage.error(error.message || '失败！', 6);",
+      "\t\t}",
+      "\t}",
+      "};"
+    ],
+    "description": "一般的request请求处理"
   },
   "div": {
     "prefix": "div",

@@ -40,6 +40,12 @@ formatters.setup({
     filetypes = {
       "rust",
     }
+  },
+  {
+    exe = "prettier",
+    filetypes = {
+      "json",
+    }
   }
 })
 
@@ -53,6 +59,12 @@ linters.setup({
       "typescript",
     },
   },
+  {
+    exe = "jsonlint",
+    filetypes = {
+      "json",
+    }
+  }
 })
 -- to disable icons and use a minimalist setup, uncomment the following
 -- lvim.use_icons = false
@@ -403,7 +415,8 @@ lvim.plugins = {
         },
       },
     })
-  end }
+  end },
+  { "mattn/emmet-vim" }
 }
 
 -- Treesitter
