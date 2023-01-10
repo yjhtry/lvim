@@ -10,8 +10,8 @@
       "let map = {};",
       "let newList = [];",
       "\narr$1.forEach(item => {",
-      "\tif (!map[item.key$2]) {",
-      "\t\tmap[item.key$3] = 1;",
+      "\tif (!map[${2:item.key}]) {",
+      "\t\tmap[${2:item.key}] = 1;",
       "\t\tnewList.push(item);",
       "\t}",
       "})"
@@ -22,7 +22,7 @@
     "prefix": "arrtomap",
     "body": [
       "$1data.reduce((acc, curr) => {",
-      "\tacc[curr.key$2] = curr.value;",
+      "\tacc[curr.key$2] = curr.value$3;",
       "\treturn acc;",
       "}, {});$3"
     ]

@@ -15,7 +15,7 @@ vim.opt.listchars:append "eol:↴"
 lvim.log.level = "info"
 lvim.format_on_save = {
   enabled = true,
-  pattern = "*.lua,*.js,*.tsx,*.ts,*.rs,*.json",
+  pattern = "*.lua,*.js,*.tsx,*.ts,*.rs,*.json,*.html",
   timeout = 8000,
 }
 
@@ -45,6 +45,12 @@ formatters.setup({
     exe = "prettier",
     filetypes = {
       "json",
+    }
+  },
+  {
+    exe = "prettier",
+    filetypes = {
+      "html",
     }
   }
 })
@@ -95,6 +101,7 @@ lvim.builtin.which_key.mappings["f"] = {
   w = { "<cmd>Telescope current_buffer_fuzzy_find<cr>", "Local Word" },
   r = { "<cmd>Telescope lsp_references<cr>", "References" },
   s = { "<cmd>Telescope lsp_document_symbols<cr>", "Symbols" },
+  R = { "<cmd>Telescope frecency<cr>", "frecency" },
 }
 
 
@@ -140,15 +147,15 @@ lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
 -- Automatically install missing parsers when entering buffer
 lvim.builtin.treesitter.auto_install = true
 
-lvim.builtin.telescope.on_config_done = function(telescope)
-  pcall(telescope.load_extension, "projects")
-  pcall(telescope.load_extension, "zoxide")
-  pcall(telescope.load_extension, "frecency")
-  pcall(telescope.load_extension, "live_grep_args")
-  pcall(telescope.load_extension, "neoclip")
-  pcall(telescope.load_extension, "undo")
-  -- any other extensions loading
-end
+-- lvim.builtin.telescope.on_config_done = function(telescope)
+--   pcall(telescope.load_extension, "projects")
+--   pcall(telescope.load_extension, "zoxide")
+--   pcall(telescope.load_extension, "frecency")
+--   pcall(telescope.load_extension, "live_grep_args")
+--   pcall(telescope.load_extension, "neoclip")
+--   pcall(telescope.load_extension, "undo")
+--   -- any other extensions loading
+-- end
 
 -- -- Additional Plugins <https://www.lunarvim.org/docs/plugins#user-plugins>
 lvim.plugins = {
@@ -241,19 +248,11 @@ lvim.plugins = {
   { "kkharji/sqlite.lua" },
   {
     "nvim-telescope/telescope-frecency.nvim",
-    opt = true,
     after = "telescope-fzf-native.nvim",
-    requires = { { "kkharji/sqlite.lua", opt = true } },
-  },
-  {
-    "jvgrootveld/telescope-zoxide",
-    opt = true,
-    after = "telescope-frecency.nvim",
-  },
-  {
-    "nvim-telescope/telescope-live-grep-args.nvim",
-    opt = true,
-    after = "telescope-zoxide",
+    config = function()
+      require "telescope".load_extension("frecency")
+    end,
+    requires = { { "kkharji/sqlite.lua" } },
   },
   {
     "windwp/nvim-ts-autotag",
@@ -473,7 +472,33 @@ telescope.extensions.undo = {
   },
 }
 
-lvim.transparent_window = true
+
+vim.cmd [[
+" disable syntax highlighting in big files
+function! DisableSyntaxTreesitter()
+    echo("Big file, disabling syntax, treesitter and folding")
+    if exists(':TSBufDisable')
+        exec 'TSBufDisable autotag'
+        exec 'TSBufDisable highlight'
+    endif
+
+    set foldmethod=manual
+    syntax clear
+    syntax off
+    filetype off
+    set noundofile
+    set noswapfile
+    set noloadplugins
+    set lazyredraw
+endfunction
+
+augroup BigFileDisable
+    autocmd!
+    autocmd BufReadPre,FileReadPre * if getfsize(expand("%")) > 1024 * 1024 | exec DisableSyntaxTreesitter() | endif
+augroup END
+  ]]
+
+-- lvim.transparent_window = true
 lvim.colorscheme = "catppuccin-mocha"
 lvim.builtin.treesitter.rainbow.enable = true
 lvim.builtin.treesitter.rainbow.max_file_lines = 5000
