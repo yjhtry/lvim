@@ -12,7 +12,7 @@ vim.opt.list = true
 vim.opt.listchars:append "eol:↴"
 
 -- general
-lvim.log.level = "info"
+lvim.log.level = "warn"
 lvim.format_on_save = {
   enabled = true,
   pattern = "*.lua,*.js,*.tsx,*.ts,*.rs,*.json,*.html",
@@ -152,9 +152,9 @@ lvim.builtin.alpha.mode = "dashboard"
 lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
-
 -- Automatically install missing parsers when entering buffer
 lvim.builtin.treesitter.auto_install = true
+
 
 -- lvim.builtin.telescope.on_config_done = function(telescope)
 --   pcall(telescope.load_extension, "projects")
@@ -480,6 +480,7 @@ ts.textobjects = {
 }
 
 local telescope = lvim.builtin.telescope
+
 telescope.extensions.undo = {
   side_by_side = true,
   layout_config = {
@@ -487,6 +488,20 @@ telescope.extensions.undo = {
   },
 }
 
+telescope.defaults.layout_strategy = "horizontal"
+telescope.defaults.layout_config = {
+  horizontal = {
+    prompt_position = "top",
+    preview_width = 0.55,
+    results_width = 0.8,
+  },
+  vertical = {
+    mirror = false,
+  },
+  width = 0.87,
+  height = 0.80,
+  preview_cutoff = 120,
+}
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.foldingRange = {
