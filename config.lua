@@ -13,7 +13,7 @@ vim.opt.listchars:append("eol:↴")
 
 -- general
 lvim.log.level = "warn"
-lvim.builtin.gitsigns.opts.current_line_blame = true
+-- lvim.builtin.gitsigns.opts.current_line_blame = true
 
 vim.o.foldcolumn = "1" -- '0' is not bad
 vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
@@ -21,8 +21,8 @@ vim.o.foldlevelstart = 99
 vim.o.foldenable = true
 
 -- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
-vim.keymap.set("n", "zR", require("ufo").openAllFolds)
-vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
+vim.keymap.set("n", "zR", require("ufo").openAllFolds, { desc = "openAllFolds" })
+vim.keymap.set("n", "zM", require("ufo").closeAllFolds, { desc = "closeAllFolds" })
 
 lvim.format_on_save = {
 	enabled = true,
@@ -118,8 +118,10 @@ lvim.builtin.which_key.mappings["f"] = {
 }
 
 lvim.builtin.which_key.mappings[" "] = {
-	name = "DiffviewOpen",
+	name = "Interesting",
 	D = { "<cmd>DiffviewClose<cr>", "DiffviewClose" },
+	r = { "<cmd>CellularAutomaton make_it_rain<cr>", "Rain" },
+	c = { "<cmd>CellularAutomaton game_of_life<cr>", "Life" },
 }
 
 -- 会话相关快捷键
@@ -144,6 +146,9 @@ lvim.builtin.which_key.mappings["t"] = {
 -- -- Use which-key to add extra bindings with the leader-key prefix
 lvim.builtin.which_key.mappings["W"] = { "<cmd>noautocmd w<cr>", "Save without formatting" }
 lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
+lvim.builtin.which_key.mappings["r"] = {
+	name = "Refactor",
+}
 
 -- -- Change theme settings
 -- lvim.colorscheme = "lunar"
@@ -159,26 +164,15 @@ lvim.builtin.treesitter.auto_install = true
 lvim.builtin.which_key.setup.plugins.marks = true
 lvim.builtin.which_key.setup.plugins.registers = true
 
--- lvim.builtin.telescope.on_config_done = function(telescope)
---   pcall(telescope.load_extension, "projects")
---   pcall(telescope.load_extension, "zoxide")
---   pcall(telescope.load_extension, "frecency")
---   pcall(telescope.load_extension, "live_grep_args")
---   pcall(telescope.load_extension, "neoclip")
---   pcall(telescope.load_extension, "undo")
---   -- any other extensions loading
--- end
-
 -- -- Additional Plugins <https://www.lunarvim.org/docs/plugins#user-plugins>
 lvim.plugins = {
 	{
 		"catppuccin/nvim",
-		as = "catppuccin",
+		name = "catppuccin",
 	},
 	{
 		"folke/persistence.nvim",
 		event = "BufReadPre", -- this will only start session saving when an actual file was opened
-		module = "persistence",
 		config = function()
 			require("persistence").setup({
 				dir = vim.fn.expand(vim.fn.stdpath("config") .. "/session/"),
@@ -209,7 +203,7 @@ lvim.plugins = {
 	},
 	{
 		"iamcco/markdown-preview.nvim",
-		run = "cd app && npm install",
+		build = "cd app && npm install",
 		ft = "markdown",
 		config = function()
 			vim.g.mkdp_auto_start = 1
@@ -260,11 +254,11 @@ lvim.plugins = {
 	{ "kkharji/sqlite.lua" },
 	{
 		"nvim-telescope/telescope-frecency.nvim",
-		after = "telescope-fzf-native.nvim",
+		-- after = "telescope-fzf-native.nvim",
 		config = function()
 			require("telescope").load_extension("frecency")
 		end,
-		requires = { { "kkharji/sqlite.lua" } },
+		dependencies = { { "kkharji/sqlite.lua" } },
 	},
 	{
 		"windwp/nvim-ts-autotag",
@@ -309,12 +303,12 @@ lvim.plugins = {
 	},
 	{
 		"romainl/vim-cool",
-		opt = true,
+		lazy = true,
 		event = { "CursorMoved", "InsertEnter" },
 	},
 	{
 		"max397574/better-escape.nvim",
-		opt = true,
+		lazy = true,
 		event = "BufReadPost",
 		config = function()
 			require("better_escape").setup({
@@ -331,10 +325,10 @@ lvim.plugins = {
 	},
 	{
 		"abecodes/tabout.nvim",
-		opt = true,
+		lazy = true,
 		event = "InsertEnter",
-		wants = "nvim-treesitter",
-		after = "nvim-cmp",
+		-- wants = "nvim-treesitter",
+		-- after = "nvim-cmp",
 		config = function()
 			require("tabout").setup({
 				tabkey = "<Tab>",
@@ -357,7 +351,7 @@ lvim.plugins = {
 	},
 	{
 		"sindrets/diffview.nvim",
-		opt = true,
+		lazy = true,
 		cmd = { "DiffviewOpen", "DiffviewClose" },
 	},
 	{ "nvim-treesitter/nvim-treesitter-textobjects" },
@@ -431,12 +425,93 @@ lvim.plugins = {
 		end,
 	},
 	{ "mattn/emmet-vim" },
-	{ "kevinhwang91/nvim-ufo", requires = "kevinhwang91/promise-async" },
+	{
+		"kevinhwang91/nvim-ufo",
+		dependencies = "kevinhwang91/promise-async",
+		config = function()
+			require("ufo").setup({
+				provider_selector = function(bufnr, filetype, buftype)
+					return { "treesitter", "indent" }
+				end,
+			})
+		end,
+	},
 	{ "eandrju/cellular-automaton.nvim" },
 	{
 		"smjonas/inc-rename.nvim",
 		config = function()
 			require("inc_rename").setup()
+		end,
+	},
+	{
+		"gelguy/wilder.nvim",
+		event = "CmdlineEnter",
+		dependencies = { { "romgrk/fzy-lua-native", after = "wilder.nvim" } },
+		config = function()
+			local wilder = require("wilder")
+			local icons = { ui = require("icon").get("ui") }
+
+			wilder.setup({ modes = { ":", "/", "?" } })
+			wilder.set_option("use_python_remote_plugin", 0)
+			wilder.set_option("pipeline", {
+				wilder.branch(
+					wilder.cmdline_pipeline({ use_python = 0, fuzzy = 1, fuzzy_filter = wilder.lua_fzy_filter() }),
+					wilder.vim_search_pipeline(),
+					{
+						wilder.check(function(_, x)
+							return x == ""
+						end),
+						wilder.history(),
+						wilder.result({
+							draw = {
+								function(_, x)
+									return icons.ui.Calendar .. " " .. x
+								end,
+							},
+						}),
+					}
+				),
+			})
+
+			local match_hl = require("utils").hl_to_rgb("String", false, "#ABE9B3")
+
+			local popupmenu_renderer = wilder.popupmenu_renderer(wilder.popupmenu_border_theme({
+				border = "rounded",
+				highlights = {
+					border = "Title", -- highlight to use for the border
+					accent = wilder.make_hl(
+						"WilderAccent",
+						"Pmenu",
+						{ { a = 0 }, { a = 0 }, { foreground = match_hl } }
+					),
+				},
+				empty_message = wilder.popupmenu_empty_message_with_spinner(),
+				highlighter = wilder.lua_fzy_highlighter(),
+				left = {
+					" ",
+					wilder.popupmenu_devicons(),
+					wilder.popupmenu_buffer_flags({
+						flags = " a + ",
+						icons = { ["+"] = icons.ui.Pencil, a = icons.ui.Indicator, h = icons.ui.File },
+					}),
+				},
+				right = {
+					" ",
+					wilder.popupmenu_scrollbar(),
+				},
+			}))
+			local wildmenu_renderer = wilder.wildmenu_renderer({
+				highlighter = wilder.lua_fzy_highlighter(),
+				apply_incsearch_fix = true,
+			})
+			wilder.set_option(
+				"renderer",
+				wilder.renderer_mux({
+					[":"] = popupmenu_renderer,
+					["/"] = wildmenu_renderer,
+					substitute = wildmenu_renderer,
+				})
+			)
 		end,
 	},
 }
@@ -515,24 +590,6 @@ telescope.defaults.layout_config = {
 	height = 0.80,
 	preview_cutoff = 120,
 }
-
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.foldingRange = {
-	dynamicRegistration = false,
-	lineFoldingOnly = true,
-}
-local language_servers = require("lspconfig").util.available_servers() -- or list servers manually like {'gopls', 'clangd'}
-for _, ls in ipairs(language_servers) do
-	require("lspconfig")[ls].setup({
-		capabilities = capabilities,
-		-- you can add other fields for setting up lsp server in this table
-	})
-end
-require("ufo").setup({
-	provider_selector = function(bufnr, filetype, buftype)
-		return { "treesitter", "indent" }
-	end,
-})
 
 vim.cmd([[
 " disable syntax highlighting in big files
