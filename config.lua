@@ -98,6 +98,11 @@ lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
 lvim.keys.normal_mode["<C-c>"] = "ESC"
 lvim.keys.normal_mode["[<space>"] = "o<ESC>"
 lvim.keys.normal_mode["]<space>"] = "O<ESC>"
+lvim.keys.normal_mode["J"] = "5j"
+lvim.keys.normal_mode["K"] = "5k"
+lvim.keys.visual_mode["J"] = "5j"
+lvim.keys.visual_mode["K"] = "5k"
+-- lvim.lsp.buffer_mappings.normal_mode["K"] = nil
 
 lvim.builtin.which_key.mappings["D"] = { "<cmd>DiffviewOpen<cr>", "DiffviewOpen" }
 lvim.builtin.which_key.mappings["u"] = { "<cmd>Telescope undo<cr>", "Undo" }
@@ -119,9 +124,10 @@ lvim.builtin.which_key.mappings["f"] = {
 
 lvim.builtin.which_key.mappings[" "] = {
 	name = "Interesting",
-	D = { "<cmd>DiffviewClose<cr>", "DiffviewClose" },
+	d = { "<cmd>DiffviewClose<cr>", "DiffviewClose" },
 	r = { "<cmd>CellularAutomaton make_it_rain<cr>", "Rain" },
-	c = { "<cmd>CellularAutomaton game_of_life<cr>", "Life" },
+	l = { "<cmd>CellularAutomaton game_of_life<cr>", "Life" },
+	s = { "<cmd>SnipRun<cr>", "SnipRun" },
 }
 
 -- 会话相关快捷键
@@ -149,9 +155,6 @@ lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Project
 lvim.builtin.which_key.mappings["r"] = {
 	name = "Refactor",
 }
-
--- -- Change theme settings
--- lvim.colorscheme = "lunar"
 
 -- After changing plugin config exit and reopen LunarVim, Run :PackerSync
 lvim.builtin.alpha.active = true
@@ -208,10 +211,6 @@ lvim.plugins = {
 		config = function()
 			vim.g.mkdp_auto_start = 1
 		end,
-	},
-	{
-		"metakirby5/codi.vim",
-		cmd = "Codi",
 	},
 	{
 		"simrat39/symbols-outline.nvim",
@@ -383,33 +382,6 @@ lvim.plugins = {
 	},
 	{ "tpope/vim-repeat" },
 	{ "debugloop/telescope-undo.nvim" },
-	-- { "Mofiqul/vscode.nvim", config = function()
-	--   local c = require('vscode.colors')
-	--   require('vscode').setup({
-	--     -- Enable transparent background
-	--     transparent = true,
-
-	--     -- Enable italic comment
-	--     italic_comments = true,
-
-	--     -- Disable nvim-tree background color
-	--     disable_nvimtree_bg = true,
-
-	--     -- Override colors (see ./lua/vscode/colors.lua)
-	--     color_overrides = {
-	--       -- vscLineNumber = '#FFFFFF',
-	--       vscBack = '#151515',
-	--     },
-
-	--     -- Override highlight groups (see ./lua/vscode/theme.lua)
-	--     group_overrides = {
-	--       -- this supports the same val table as vim.api.nvim_set_hl
-	--       -- use colors from this colorscheme by requiring vscode.colors!
-	--       Cursor = { fg = c.vscDarkBlue, bg = c.vscLightGreen, bold = true },
-	--     }
-	--   })
-
-	-- end },
 	{
 		"simrat39/rust-tools.nvim",
 		config = function()
@@ -512,6 +484,36 @@ lvim.plugins = {
 					substitute = wildmenu_renderer,
 				})
 			)
+		end,
+	},
+	{
+		"michaelb/sniprun",
+		build = "bash ./install.sh",
+		-- cmd = { "SnipRun", "'<,'>SnipRun" },
+		cmd = { "SnipRun", "SnipLive" },
+		lazy = true,
+		config = function()
+			require("sniprun").setup({
+				selected_interpreters = {}, -- " use those instead of the default for the current filetype
+				repl_enable = {}, -- " enable REPL-like behavior for the given interpreters
+				repl_disable = {}, -- " disable REPL-like behavior for the given interpreters
+				interpreter_options = {}, -- " intepreter-specific options, consult docs / :SnipInfo <name>
+				-- " you can combo different display modes as desired
+				display = {
+					"Classic", -- "display results in the command-line  area
+					"VirtualTextOk", -- "display ok results as virtual text (multiline is shortened)
+					"VirtualTextErr", -- "display error results as virtual text
+					-- "TempFloatingWindow",      -- "display results in a floating window
+					"LongTempFloatingWindow", -- "same as above, but only long results. To use with VirtualText__
+					-- "Terminal"                 -- "display results in a vertical split
+				},
+				-- " miscellaneous compatibility/adjustement settings
+				inline_messages = 0, -- " inline_message (0/1) is a one-line way to display messages
+				-- " to workaround sniprun not being able to display anything
+
+				borders = "shadow", -- " display borders around floating windows
+				-- " possible values are 'none', 'single', 'double', or 'shadow'
+			})
 		end,
 	},
 }
