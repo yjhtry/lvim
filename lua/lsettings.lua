@@ -16,3 +16,11 @@ lvim.builtin.treesitter.rainbow.max_file_lines = 1000
 
 lvim.builtin.which_key.setup.plugins.marks = true
 lvim.builtin.which_key.setup.plugins.registers = true
+
+-- lvim.builtin.gitsigns.opts.current_line_blame = true
+
+lvim.builtin.telescope.on_config_done = function(telescope)
+	pcall(telescope.load_extension, "undo")
+	pcall(telescope.load_extension, "neoclip")
+	-- any other extensions loading
+end

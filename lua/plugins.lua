@@ -1,9 +1,11 @@
 -- -- Additional Plugins <https://www.lunarvim.org/docs/plugins#user-plugins>
 lvim.plugins = {
+	-- 主题插件
 	{
 		"catppuccin/nvim",
 		name = "catppuccin",
 	},
+	-- 会话管理插件
 	{
 		"folke/persistence.nvim",
 		event = "BufReadPre", -- this will only start session saving when an actual file was opened
@@ -59,11 +61,6 @@ lvim.plugins = {
 				debug = false, -- Print debug information
 				opacity = nil, -- 0-100 opacity level of the floating window where 100 is fully transparent.
 				post_open_hook = nil, -- A function taking two arguments, a buffer and a window to be ran as a hook.
-				-- You can use "default_mappings = true" setup option
-				-- Or explicitly set keybindings
-				-- vim.cmd("nnoremap gpd <cmd>lua require('goto-preview').goto_preview_definition()<CR>")
-				-- vim.cmd("nnoremap gpi <cmd>lua require('goto-preview').goto_preview_implementation()<CR>")
-				-- vim.cmd("nnoremap gP <cmd>lua require('goto-preview').close_all_win()<CR>")
 			})
 		end,
 	},
@@ -84,7 +81,6 @@ lvim.plugins = {
 	{ "kkharji/sqlite.lua" },
 	{
 		"nvim-telescope/telescope-frecency.nvim",
-		-- after = "telescope-fzf-native.nvim",
 		config = function()
 			require("telescope").load_extension("frecency")
 		end,
@@ -105,6 +101,7 @@ lvim.plugins = {
 			})
 		end,
 	},
+	-- quickfix window
 	{
 		"kevinhwang91/nvim-bqf",
 		event = { "BufRead", "BufNew" },
@@ -131,6 +128,7 @@ lvim.plugins = {
 			})
 		end,
 	},
+	-- 搜索后结束高亮
 	{
 		"romainl/vim-cool",
 		lazy = true,
@@ -146,10 +144,6 @@ lvim.plugins = {
 				timeout = 500, -- the time in which the keys must be hit in ms. Use option timeoutlen by default
 				clear_empty_lines = false, -- clear line after escaping if there is only whitespace
 				keys = "<Esc>", -- keys used for escaping, if it is a function will use the result everytime
-				-- example(recommended)
-				-- keys = function()
-				--   return vim.api.nvim_win_get_cursor(0)[2] > 1 and '<esc>l' or '<esc>'
-				-- end,
 			})
 		end,
 	},
@@ -157,8 +151,6 @@ lvim.plugins = {
 		"abecodes/tabout.nvim",
 		lazy = true,
 		event = "InsertEnter",
-		-- wants = "nvim-treesitter",
-		-- after = "nvim-cmp",
 		config = function()
 			require("tabout").setup({
 				tabkey = "<Tab>",
@@ -202,11 +194,8 @@ lvim.plugins = {
 		config = function()
 			require("flit").setup({
 				keys = { f = "f", F = "F", t = "t", T = "T" },
-				-- A string like "nv", "nvo", "o", etc.
 				labeled_modes = "v",
 				multiline = true,
-				-- Like `leap`s similar argument (call-specific overrides).
-				-- E.g.: opts = { equivalence_classes = {} }
 				opts = {},
 			})
 		end,
@@ -228,6 +217,7 @@ lvim.plugins = {
 		end,
 	},
 	{ "mattn/emmet-vim" },
+	-- 自动缩进插件
 	{
 		"kevinhwang91/nvim-ufo",
 		dependencies = "kevinhwang91/promise-async",
@@ -239,13 +229,16 @@ lvim.plugins = {
 			})
 		end,
 	},
+	-- 下雨和生命周期游戏插件
 	{ "eandrju/cellular-automaton.nvim" },
 	{
 		"smjonas/inc-rename.nvim",
 		config = function()
 			require("inc_rename").setup()
+			vim.keymap.set("n", "<leader>rn", ":IncRename ", { desc = "Rename" })
 		end,
 	},
+	-- 命令提示和搜索自动分词插件
 	{
 		"gelguy/wilder.nvim",
 		event = "CmdlineEnter",
@@ -320,7 +313,6 @@ lvim.plugins = {
 	{
 		"michaelb/sniprun",
 		build = "bash ./install.sh",
-		-- cmd = { "SnipRun", "'<,'>SnipRun" },
 		cmd = { "SnipRun", "SnipLive" },
 		lazy = true,
 		config = function()
@@ -329,22 +321,30 @@ lvim.plugins = {
 				repl_enable = {}, -- " enable REPL-like behavior for the given interpreters
 				repl_disable = {}, -- " disable REPL-like behavior for the given interpreters
 				interpreter_options = {}, -- " intepreter-specific options, consult docs / :SnipInfo <name>
-				-- " you can combo different display modes as desired
 				display = {
 					"Classic", -- "display results in the command-line  area
 					"VirtualTextOk", -- "display ok results as virtual text (multiline is shortened)
 					"VirtualTextErr", -- "display error results as virtual text
-					-- "TempFloatingWindow",      -- "display results in a floating window
 					"LongTempFloatingWindow", -- "same as above, but only long results. To use with VirtualText__
-					-- "Terminal"                 -- "display results in a vertical split
 				},
-				-- " miscellaneous compatibility/adjustement settings
 				inline_messages = 0, -- " inline_message (0/1) is a one-line way to display messages
-				-- " to workaround sniprun not being able to display anything
-
 				borders = "shadow", -- " display borders around floating windows
-				-- " possible values are 'none', 'single', 'double', or 'shadow'
 			})
+		end,
+	},
+	-- 自动类型注释插件
+	{
+		"danymat/neogen",
+		dependencies = "nvim-treesitter/nvim-treesitter",
+		config = true,
+	},
+	{
+		"AckslD/nvim-neoclip.lua",
+		dependencies = {
+			{ "nvim-telescope/telescope.nvim" },
+		},
+		config = function()
+			require("neoclip").setup()
 		end,
 	},
 }

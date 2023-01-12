@@ -1,7 +1,7 @@
 lvim.format_on_save = {
 	enabled = true,
 	pattern = "*.lua,*.js,*.tsx,*.ts,*.rs,*.json,*.html",
-	timeout = 8000,
+	timeout = 1000,
 }
 
 local formatters = require("lvim.lsp.null-ls.formatters")
@@ -15,24 +15,14 @@ formatters.setup({
 			"javascript",
 			"typescriptreact",
 			"typescript",
+			"json",
+			"html",
 		},
 	},
 	{
 		exe = "rustfmt",
 		filetypes = {
 			"rust",
-		},
-	},
-	{
-		exe = "prettier",
-		filetypes = {
-			"json",
-		},
-	},
-	{
-		exe = "prettier",
-		filetypes = {
-			"html",
 		},
 	},
 	{

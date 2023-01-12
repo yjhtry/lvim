@@ -15,16 +15,21 @@ lvim.keys.normal_mode["J"] = "5j"
 lvim.keys.normal_mode["K"] = "5k"
 lvim.keys.visual_mode["J"] = "5j"
 lvim.keys.visual_mode["K"] = "5k"
--- lvim.lsp.buffer_mappings.normal_mode["K"] = nil
+lvim.lsp.buffer_mappings.normal_mode["K"] = nil
 
 lvim.builtin.which_key.mappings["D"] = { "<cmd>DiffviewOpen<cr>", "DiffviewOpen" }
-lvim.builtin.which_key.mappings["u"] = { "<cmd>Telescope undo<cr>", "Undo" }
 lvim.builtin.which_key.mappings["ss"] = { "<cmd>Telescope<cr>", "Telescope" }
 lvim.builtin.which_key.mappings["sb"] = { "<cmd>Telescope buffers<cr>", "Buffers" }
 lvim.builtin.which_key.mappings["sw"] = { "<cmd>Telescope live_grep<cr>", "live Word" }
 lvim.builtin.which_key.mappings["sc"] = { "<cmd>Telescope grep_string<cr>", "Cursor Word" }
 lvim.builtin.which_key.mappings["n"] = { "<cmd>enew<cr>", "New File" }
 lvim.builtin.which_key.mappings["o"] = { "<cmd>SymbolsOutline<cr>", "SymbolsOutline" }
+
+lvim.builtin.which_key.mappings["u"] = {
+	name = "Utils",
+	u = { "<cmd>Telescope undo<cr>", "Undo" },
+	c = { "<cmd>Telescope neoclip<cr>", "Clipy History" },
+}
 
 lvim.builtin.which_key.mappings["f"] = {
 	name = "Local search",
@@ -67,4 +72,5 @@ lvim.builtin.which_key.mappings["W"] = { "<cmd>noautocmd w<cr>", "Save without f
 lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
 lvim.builtin.which_key.mappings["r"] = {
 	name = "Refactor",
+	f = { "<cmd>Neogen func<cr>", "Annotation Fun" },
 }
