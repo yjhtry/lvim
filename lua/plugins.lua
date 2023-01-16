@@ -136,7 +136,6 @@ lvim.plugins = {
 	},
 	{
 		"max397574/better-escape.nvim",
-		lazy = true,
 		event = "BufReadPost",
 		config = function()
 			require("better_escape").setup({

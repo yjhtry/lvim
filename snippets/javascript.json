@@ -1,11 +1,11 @@
 {
-  "arruni": {
-    "prefix": "arruni",
+  "arrayDeduplication": {
+    "prefix": "ad",
     "body": ["Array.from(new Set(data$0))"],
     "description": "数组简单去重"
   },
-  "karruni": {
-    "prefix": "karruni",
+  "objectArrayDeduplication": {
+    "prefix": "kad",
     "body": [
       "let map = {};",
       "let newList = [];",
@@ -18,17 +18,18 @@
     ],
     "description": "对象数组简单去重"
   },
-  "arrtomap": {
-    "prefix": "arrtomap",
+  "arrayToMao": {
+    "prefix": "atm",
     "body": [
       "$1data.reduce((acc, curr) => {",
       "\tacc[curr.key$2] = curr.value$3;",
       "\treturn acc;",
-      "}, {});$3"
-    ]
+      "}, {});$4"
+    ],
+    "description": "将数组转为对象"
   },
-  "lreq": {
-    "prefix": "lreq",
+  "requestWithLoading": {
+    "prefix": "lr",
     "body": [
       "const handleOk$1 = async () => {",
       "\ttry {",
@@ -51,8 +52,8 @@
     ],
     "description": "一般的request请求处理 包含loading"
   },
-  "nlreq": {
-    "prefix": "nlreq",
+  "requestNotLoading": {
+    "prefix": "nlr",
     "body": [
       "const handleOk$1 = async () => {",
       "\ttry {",
@@ -72,14 +73,435 @@
     ],
     "description": "一般的request请求处理"
   },
-  "div": {
-    "prefix": "div",
-    "body": ["<div>", "\t$1", "</div>"],
-    "description": "HTML - Defines a section in a document"
+  "exportType": {
+    "body": ["export type ${1:first} = {${2:second}}"],
+    "key": "exportType",
+    "prefix": "exptp",
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
   },
-  "span": {
-    "prefix": "span",
-    "body": "<span>$1</span>$2",
-    "description": "HTML - Defines a section in a document"
+  "exportInterface": {
+    "key": "exportInterface",
+    "prefix": "expint",
+    "body": ["export interface ${1:first} {${2:second}}"],
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "consoleAssert": {
+    "key": "consoleAssert",
+    "prefix": "cas",
+    "body": ["console.assert(${1:first}, ${2:second})"],
+    "description": "If the specified expression is false, the message is written to the console along with a stack trace",
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "consoleClear": {
+    "key": "consoleClear",
+    "prefix": "ccl",
+    "body": ["console.clear()"],
+    "description": "Clears the console",
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "consoleCount": {
+    "key": "consoleCount",
+    "prefix": "cco",
+    "body": ["console.count(${1:first})"],
+    "description": "Writes the the number of times that count() has been invoked at the same line and with the same label",
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "consoleDir": {
+    "key": "consoleDir",
+    "prefix": "cdi",
+    "body": ["console.dir(${1:first})"],
+    "description": "Prints a JavaScript representation of the specified object",
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "consoleError": {
+    "key": "consoleError",
+    "prefix": "cer",
+    "body": ["console.error(${1:first})"],
+    "description": "Displays a message in the console and also includes a stack trace from where the method was called",
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "consoleGroup": {
+    "key": "consoleGroup",
+    "prefix": "cgr",
+    "body": ["console.group('${1:first}')"],
+    "description": "Groups and indents all following output by an additional level, until console.groupEnd() is called.",
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "consoleGroupEnd": {
+    "key": "consoleGroupEnd",
+    "prefix": "cge",
+    "body": ["console.groupEnd()"],
+    "description": "Closes out the corresponding console.group().",
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "consoleLog": {
+    "key": "consoleLog",
+    "prefix": "clg",
+    "body": ["console.log(${1:first})"],
+    "description": "Displays a message in the console",
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "consoleTrace": {
+    "key": "consoleTrace",
+    "prefix": "ctr",
+    "body": ["console.trace(${1:first})"],
+    "description": "Prints a stack trace from the point where the method was called",
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "consoleLogObject": {
+    "key": "consoleLogObject",
+    "prefix": "clo",
+    "body": ["console.log('${1:first}', ${1:first})"],
+    "description": "Logs property with name.",
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "consoleLogJson": {
+    "key": "consoleLogJson",
+    "prefix": "clj",
+    "body": ["console.log('${1:first}', JSON.stringify(${1:first}, null, 2))"],
+    "description": "Logs stringified JSON property with name.",
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "consoleTime": {
+    "key": "consoleTime",
+    "prefix": "ctm",
+    "body": ["console.time('${1:first}')"],
+    "description": "Console time wrapper",
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "consoleTimeEnd": {
+    "key": "consoleTimeEnd",
+    "prefix": "cte",
+    "body": ["console.timeEnd('${1:first}')"],
+    "description": "Console time end wrapper",
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "consoleWarn": {
+    "key": "consoleWarn",
+    "prefix": "cwa",
+    "body": ["console.warn(${1:first})"],
+    "description": "Displays a message in the console but also displays a yellow warning icon along with the logged message",
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "consoleInfo": {
+    "key": "consoleInfo",
+    "prefix": "cin",
+    "body": ["console.info(${1:first})"],
+    "description": "Displays a message in the console but also displays a blue information icon along with the logged message",
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "consoleTable": {
+    "key": "consoleTable",
+    "prefix": "ctl",
+    "body": ["console.table([${1:first}])"],
+    "description": "Logs table to console",
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "importAs": {
+    "key": "importAs",
+    "prefix": "ima",
+    "body": ["import { ${2:second} as ${3:third} } from '${1:first}'"],
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "importDestructing": {
+    "key": "importDestructing",
+    "prefix": "imd",
+    "body": ["import { ${2:second} } from '${1:first}'"],
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "importEverything": {
+    "key": "importEverything",
+    "prefix": "ime",
+    "body": ["import * as ${2:second} from '${1:first}'"],
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "importNoModuleName": {
+    "key": "importNoModuleName",
+    "prefix": "imn",
+    "body": ["import '${1:first}'"],
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "import": {
+    "key": "import",
+    "prefix": "imp",
+    "body": ["import ${2:second} from '${1:first}'"],
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "describeBlock": {
+    "key": "describeBlock",
+    "prefix": "desc",
+    "body": ["describe('${1:first}', () => { ${2:second} })"],
+    "description": "Testing `describe` block",
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "itAsyncBlock": {
+    "key": "itAsyncBlock",
+    "prefix": "tita",
+    "body": ["it('should ${1:first}', async () => { ${2:second} })"],
+    "description": "Testing asynchronous `it` block",
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "itBlock": {
+    "key": "itBlock",
+    "prefix": "tit",
+    "body": ["it('should ${1:first}', () => { ${2:second} })"],
+    "description": "Testing `it` block",
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "exportDefault": {
+    "key": "exportDefault",
+    "prefix": "exp",
+    "body": ["export default ${1:first}"],
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "exportDestructing": {
+    "key": "exportDestructing",
+    "prefix": "exd",
+    "body": ["export { ${2:second} } from '${1:first}'"],
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "exportAs": {
+    "key": "exportAs",
+    "prefix": "exa",
+    "body": ["export { ${2:second} as ${3:third} } from '${1:first}'"],
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "exportNamedFunction": {
+    "key": "exportNamedFunction",
+    "prefix": "enf",
+    "body": ["export const ${1:first} = (${2:second}) => {${3:third}}"],
+    "description": "Export named function",
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "exportDefaultFunction": {
+    "key": "exportDefaultFunction",
+    "prefix": "edf",
+    "body": ["export default (${1:first}) => {${2:second}}"],
+    "description": "Export default function",
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "exportDefaultNamedFunction": {
+    "key": "exportDefaultNamedFunction",
+    "prefix": "ednf",
+    "body": ["export default function ${1:first}(${2:second}) {${3:third}}"],
+    "description": "Export default named function",
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "method": {
+    "key": "method",
+    "prefix": "met",
+    "body": ["${1:first} = (${2:second}) => {${3:third}}"],
+    "description": "Creates a method inside a class",
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "propertyGet": {
+    "key": "propertyGet",
+    "prefix": "pge",
+    "body": ["get ${1:first}() {", "  return this.${2:second}", "}"],
+    "description": "Creates a getter property inside a class",
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "propertySet": {
+    "key": "propertySet",
+    "prefix": "pse",
+    "body": ["set ${1:first}(${2:second}) {${3:third}}"],
+    "description": "Creates a setter property inside a class",
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "forEach": {
+    "key": "forEach",
+    "prefix": "fre",
+    "body": ["${1:first}.forEach(${2:second} => {${3:third}})"],
+    "description": "Creates a forEach statement",
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "forOf": {
+    "key": "forOf",
+    "prefix": "fof",
+    "body": ["for(let ${1:first} of ${2:second}) {${3:third}}"],
+    "description": "Iterating over property names of iterable objects",
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "forIn": {
+    "key": "forIn",
+    "prefix": "fin",
+    "body": ["for(let ${1:first} in ${2:second}) {${3:third}}"],
+    "description": "Iterating over property values of iterable objects",
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "anonymousFunction": {
+    "key": "anonymousFunction",
+    "prefix": "anfn",
+    "body": ["(${1:first}) => { ${2:second} }"],
+    "description": "Creates an anonymous function",
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "namedFunction": {
+    "key": "namedFunction",
+    "prefix": "nfn",
+    "body": ["const ${1:first} = (${2:second}) => { ${3:third} }"],
+    "description": "Creates a named function",
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "const destructingObject": {
+    "key": "destructingObject",
+    "prefix": "cdo",
+    "body": ["const {${2:second}} = ${1:first}"],
+    "description": "Creates and assigns a local variable using object destructing",
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "const destructingArray": {
+    "key": "destructingArray",
+    "prefix": "cda",
+    "body": ["const [${2:second}] = ${1:first}"],
+    "description": "Creates and assigns a local variable using array destructing",
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "let destructingObject": {
+    "key": "destructingObject",
+    "prefix": "ldo",
+    "body": ["let {${2:second}} = ${1:first}"],
+    "description": "Creates and assigns a local variable using object destructing",
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "let destructingArray": {
+    "key": "destructingArray",
+    "prefix": "lda",
+    "body": ["let [${2:second}] = ${1:first}"],
+    "description": "Creates and assigns a local variable using array destructing",
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "setInterval": {
+    "key": "setInterval",
+    "prefix": "sti",
+    "body": ["setInterval(() => { ${1:first} }, ${2:second})"],
+    "description": "Executes the given function at specified intervals",
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "setTimeOut": {
+    "key": "setTimeOut",
+    "prefix": "sto",
+    "body": ["setTimeout(() => { ${1:first} }, ${2:second})"],
+    "description": "Executes the given function after the specified delay",
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "promise": {
+    "key": "promise",
+    "prefix": "prom",
+    "body": ["return new Promise((resolve, reject) => { ${1:first} })"],
+    "description": "Creates and returns a new Promise in the standard ES7 syntax",
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "classConstructor": {
+    "key": "classConstructor",
+    "prefix": "rconst",
+    "body": [
+      "constructor(props) {",
+      "  super(props)",
+      "",
+      "  this.state = {",
+      "     ${1:first}",
+      "  }",
+      "}"
+    ],
+    "description": "Adds a default constructor for it('', () => {})the class that contains props as arguments",
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "typeofSnippet": {
+    "key": "typeofSnippet",
+    "prefix": "tpf",
+    "body": ["typeof ${1:first}"],
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "await sleep": {
+    "prefix": "ast",
+    "body": "await new Promise((r) => setTimeout(r, ${0}))"
+  },
+  "require": {
+    "prefix": "rq",
+    "body": "require('${1:module}')"
+  },
+  "const module = require('module')": {
+    "prefix": "cr",
+    "body": "const ${1:module} = require('${1:module}')"
+  },
+  "exports.member": {
+    "prefix": "em",
+    "body": "exports.${1:member} = ${2:value}"
+  },
+  "module.exports": {
+    "prefix": "me",
+    "body": "module.exports = ${1:name}"
+  },
+  "Array.isArray()": {
+    "prefix": "ia",
+    "body": "Array.isArray(${1:source})"
+  },
+  "ternary assignment": {
+    "prefix": "ta",
+    "body": "const ${0} = ${1:cond} ? ${2:true} : ${3:false}"
+  },
+  "Object.keys": {
+    "prefix": "ok",
+    "body": "Object.keys(${1:obj})"
+  },
+  "Object.values": {
+    "prefix": "ov",
+    "body": "Object.values(${1:obj})"
+  },
+  "Object.entries": {
+    "prefix": "oe",
+    "body": "Object.entries(${1:obj})"
+  },
+  "map": {
+    "prefix": "map",
+    "body": "${1:iterable}.map((${2:item}) => {\n\t${0}\n})"
+  },
+  "map single desctructured argument": {
+    "prefix": "mapsd",
+    "body": "${1:iterable}.map(({${2:item}}) => $3)"
+  },
+  "const assignment awaited": {
+    "prefix": "ca",
+    "body": "const ${1:name} = await ${2:value}"
+  },
+  "let assignment awaited": {
+    "prefix": "la",
+    "body": "let ${1:name} = await ${2:value}"
+  },
+  "const assignment": {
+    "prefix": "c",
+    "body": "const ${1:name} = ${2:value}"
+  },
+  "let assignment": {
+    "prefix": "l",
+    "body": "let ${1:name} = ${2:value}"
+  },
+  "nextApi": {
+    "prefix": "napi",
+    "body": [
+      "import type { NextApiRequest, NextApiResponse } from 'next'",
+      "",
+      "interface Data {}",
+      "",
+      "export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {",
+      "  ${1}",
+      "}"
+    ]
+  },
+  "nextMiddleware": {
+    "prefix": "nmid",
+    "body": [
+      "import { NextResponse } from 'next/server'",
+      "import type { NextRequest } from 'next/server'",
+      "",
+      "export async function middleware(request: NextRequest) {",
+      "  ${1}",
+      "}",
+      "",
+      "export const config = {",
+      "  matcher: '/about/:path*',",
+      "}"
+    ]
   }
 }

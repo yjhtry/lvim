@@ -7,19 +7,27 @@
   "contributes": {
     "snippets": [
       {
-        "language": "typescript",
-        "path": "./javascript.json"
-      },
-      {
-        "language": "typescriptreact",
-        "path": "./javascript.json"
-      },
-      {
         "language": "javascript",
         "path": "./javascript.json"
       },
       {
+        "language": "typescript",
+        "path": "./javascript.json"
+      },
+      {
         "language": "javascriptreact",
+        "path": "./tsx.json"
+      },
+      {
+        "language": "javascriptreact",
+        "path": "./javascript.json"
+      },
+      {
+        "language": "typescriptreact",
+        "path": "./tsx.json"
+      },
+      {
+        "language": "typescriptreact",
         "path": "./javascript.json"
       }
     ]

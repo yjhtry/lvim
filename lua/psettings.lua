@@ -70,3 +70,17 @@ telescope.defaults.layout_config = {
 	height = 0.80,
 	preview_cutoff = 120,
 }
+
+require("lspconfig").sumneko_lua.setup({
+	settings = {
+		Lua = {
+			runtime = {
+				version = "Lua 5.4", -- Settings go here!
+			},
+			completion = {
+				keywordSnippet = "Replace",
+				callSnippet = "Replace",
+			},
+		},
+	},
+})
