@@ -84,3 +84,13 @@ require("lspconfig").sumneko_lua.setup({
 		},
 	},
 })
+
+require("lspconfig").tailwindcss.setup({
+	settings = {
+		tailwindCSS = {
+			experimental = {
+				classRegex = { "cn\\('([^)]*)\\')", "'([^']*)'" },
+			},
+		},
+	},
+})

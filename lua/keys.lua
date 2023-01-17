@@ -74,3 +74,5 @@ lvim.builtin.which_key.mappings["r"] = {
 	name = "Refactor",
 	f = { "<cmd>Neogen func<cr>", "Annotation Fun" },
 }
+
+lvim.builtin.which_key.mappings["k"] = { vim.lsp.buf.hover, "Hover information" }

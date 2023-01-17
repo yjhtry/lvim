@@ -234,14 +234,17 @@ lvim.plugins = {
 		"smjonas/inc-rename.nvim",
 		config = function()
 			require("inc_rename").setup()
-			vim.keymap.set("n", "<leader>rn", ":IncRename ", { desc = "Rename" })
+			vim.keymap.set("n", "<leader>rn", function()
+				return ":IncRename " .. vim.fn.expand("<cword>")
+			end, { expr = true, desc = "Rename" })
+			-- vim.keymap.set("n", "<leader>rn", ":IncRename ", { desc = "Rename" })
 		end,
 	},
 	-- 命令提示和搜索自动分词插件
 	{
 		"gelguy/wilder.nvim",
 		event = "CmdlineEnter",
-		dependencies = { { "romgrk/fzy-lua-native", after = "wilder.nvim" } },
+		dependencies = { { "romgrk/fzy-lua-native" } },
 		config = function()
 			local wilder = require("wilder")
 			local icons = { ui = require("icon").get("ui") }

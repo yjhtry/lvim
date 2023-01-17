@@ -21,7 +21,7 @@
   "arrayToMao": {
     "prefix": "atm",
     "body": [
-      "$1data.reduce((acc, curr) => {",
+      "data$1.reduce((acc, curr) => {",
       "\tacc[curr.key$2] = curr.value$3;",
       "\treturn acc;",
       "}, {});$4"
