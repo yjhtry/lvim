@@ -89,7 +89,12 @@ require("lspconfig").tailwindcss.setup({
 	settings = {
 		tailwindCSS = {
 			experimental = {
-				classRegex = { "cn\\('([^)]*)\\')", "'([^']*)'" },
+				classRegex = {
+					"cn\\('([^)]*)\\')",
+					-- "'([^']*)'",
+					"cva\\(([^)]*)\\)",
+					-- "[\"'`]([^\"'`]*).*?[\"'`]",
+				},
 			},
 		},
 	},

@@ -10,8 +10,8 @@
       "let map = {};",
       "let newList = [];",
       "\narr$1.forEach(item => {",
-      "\tif (!map[${2:item.key}]) {",
-      "\t\tmap[${2:item.key}] = 1;",
+      "\tif (!map[item.${2:key}]) {",
+      "\t\tmap[item.${2:key}] = 1;",
       "\t\tnewList.push(item);",
       "\t}",
       "})"
@@ -35,7 +35,7 @@
       "\ttry {",
       "\t\tif (loading) return;",
       "\t\t\tsetLoading(true);",
-      "\t\t\tconst res = await todo().finally(() =>",
+      "\t\t\tconst res = await todo$2().finally(() =>",
       "\t\t\tsetLoading(false),",
       "\t\t);",
       "\t\tif (res && res.code === 20000 && res.data) {",
@@ -57,7 +57,7 @@
     "body": [
       "const handleOk$1 = async () => {",
       "\ttry {",
-      "\t\t\tconst res = await todo({ });",
+      "\t\t\tconst res = await todo$2({ });",
       "\t\t);",
       "\t\tif (res && res.code === 20000 && res.data) {",
       "\t\t\tmessage.success('成功！');",
@@ -225,6 +225,12 @@
     "key": "import",
     "prefix": "imp",
     "body": ["import ${2:second} from '${1:first}'"],
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "importType": {
+    "key": "importType",
+    "prefix": "imt",
+    "body": ["import type { ${2:second} } from '${1:first}'"],
     "scope": "typescript,typescriptreact,javascript,javascriptreact"
   },
   "describeBlock": {
