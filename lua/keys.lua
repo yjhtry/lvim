@@ -13,8 +13,17 @@ lvim.keys.normal_mode["[<space>"] = "o<ESC>"
 lvim.keys.normal_mode["]<space>"] = "O<ESC>"
 lvim.keys.normal_mode["J"] = "5j"
 lvim.keys.normal_mode["K"] = "5k"
+lvim.keys.normal_mode["<A-J>"] = ":copy .<CR>=="
+lvim.keys.normal_mode["<A-K>"] = ":copy .-1<CR>=="
+
 lvim.keys.visual_mode["J"] = "5j"
 lvim.keys.visual_mode["K"] = "5k"
+lvim.keys.visual_mode["<A-J>"] = ":copy '><CR>=="
+lvim.keys.visual_mode["<A-K>"] = ":copy '<-1<CR>=="
+
+lvim.keys.insert_mode["<A-J>"] = "<Esc>:copy .<CR>==gi"
+lvim.keys.insert_mode["<A-K>"] = "<Esc>:copy .-1<CR>==gi"
+
 lvim.lsp.buffer_mappings.normal_mode["K"] = nil
 
 lvim.builtin.which_key.mappings["D"] = { "<cmd>DiffviewOpen<cr>", "DiffviewOpen" }
@@ -73,6 +82,13 @@ lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Project
 lvim.builtin.which_key.mappings["r"] = {
 	name = "Refactor",
 	f = { "<cmd>Neogen func<cr>", "Annotation Fun" },
+}
+
+lvim.builtin.which_key.vmappings["r"] = {
+	name = "Refactor",
+	f = { "<Esc><Cmd>lua require('refactoring').refactor('Extract Function')<CR>", "Extract function" },
+	v = { "<Esc><Cmd>lua require('refactoring').refactor('Extract Variable')<CR>", "Extract variable" },
+	a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
 }
 
 lvim.builtin.which_key.mappings["k"] = { vim.lsp.buf.hover, "Hover information" }
