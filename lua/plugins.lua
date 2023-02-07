@@ -158,14 +158,14 @@ lvim.plugins = {
 	},
 	{
 		"ggandor/leap.nvim",
-		event = "BufRead",
+		-- event = "BufRead",
 		config = function()
 			require("leap").add_default_mappings()
 		end,
 	},
 	{
 		"ggandor/flit.nvim",
-		event = "BufRead",
+		-- event = "BufRead",
 		config = function()
 			require("flit").setup({
 				keys = { f = "f", F = "F", t = "t", T = "T" },

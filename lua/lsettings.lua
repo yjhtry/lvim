@@ -1,5 +1,5 @@
 lvim.log.level = "warn"
-lvim.colorscheme = "catppuccin-mocha"
+lvim.colorscheme = "tokyonight-night"
 
 lvim.builtin.alpha.active = true
 lvim.builtin.alpha.mode = "dashboard"
