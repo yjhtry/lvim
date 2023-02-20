@@ -1,7 +1,7 @@
 lvim.format_on_save = {
 	enabled = true,
 	pattern = "*.lua,*.js,*.tsx,*.ts,*.rs,*.json,*.html,*.cc",
-	timeout = 1000,
+	timeout = 2000,
 }
 
 local formatters = require("lvim.lsp.null-ls.formatters")

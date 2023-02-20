@@ -15,22 +15,22 @@ lvim.keys.normal_mode["J"] = "5j"
 lvim.keys.normal_mode["K"] = "5k"
 lvim.keys.normal_mode["<A-J>"] = ":copy .<CR>=="
 lvim.keys.normal_mode["<A-K>"] = ":copy .-1<CR>=="
-lvim.keys.normal_mode["<S-h>"] = "^"
-lvim.keys.normal_mode["<S-l>"] = "g_"
+-- lvim.keys.normal_mode["<S-h>"] = "^"
+-- lvim.keys.normal_mode["<S-l>"] = "g_"
 
 lvim.keys.visual_mode["J"] = "5j"
 lvim.keys.visual_mode["K"] = "5k"
 lvim.keys.visual_mode["<A-J>"] = ":copy '><CR>=="
 lvim.keys.visual_mode["<A-K>"] = ":copy '<-1<CR>=="
-lvim.keys.visual_mode["<S-h>"] = "^"
-lvim.keys.visual_mode["<S-l>"] = "g_"
+-- lvim.keys.visual_mode["<S-h>"] = "^"
+-- lvim.keys.visual_mode["<S-l>"] = "g_"
 
 lvim.keys.insert_mode["<A-J>"] = "<Esc>:copy .<CR>==gi"
 lvim.keys.insert_mode["<A-K>"] = "<Esc>:copy .-1<CR>==gi"
 
 lvim.keys.operator_pending_mode = {}
-lvim.keys.operator_pending_mode["<S-h>"] = "^"
-lvim.keys.operator_pending_mode["<S-l>"] = "g_"
+-- lvim.keys.operator_pending_mode["<S-h>"] = "^"
+-- lvim.keys.operator_pending_mode["<S-l>"] = "g_"
 
 lvim.lsp.buffer_mappings.normal_mode["K"] = nil
 lvim.lsp.buffer_mappings.normal_mode["gs"] = nil

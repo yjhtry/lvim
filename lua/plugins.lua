@@ -46,12 +46,6 @@ lvim.plugins = {
 		end,
 	},
 	{
-		"simrat39/symbols-outline.nvim",
-		config = function()
-			require("symbols-outline").setup()
-		end,
-	},
-	{
 		"rmagatti/goto-preview",
 		config = function()
 			require("goto-preview").setup({
@@ -317,15 +311,6 @@ lvim.plugins = {
 		config = true,
 	},
 	{
-		"AckslD/nvim-neoclip.lua",
-		dependencies = {
-			{ "nvim-telescope/telescope.nvim" },
-		},
-		config = function()
-			require("neoclip").setup()
-		end,
-	},
-	{
 		"ThePrimeagen/refactoring.nvim",
 		dependencies = {
 			{ "nvim-lua/plenary.nvim" },
@@ -356,6 +341,12 @@ lvim.plugins = {
 				printf_statements = {},
 				print_var_statements = {},
 			})
+		end,
+	},
+	{
+		"jcdickinson/wpm.nvim",
+		config = function()
+			require("wpm").setup({})
 		end,
 	},
 }

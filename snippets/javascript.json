@@ -162,6 +162,13 @@
     "description": "Logs stringified JSON property with name.",
     "scope": "typescript,typescriptreact,javascript,javascriptreact"
   },
+  "consoleLogParse": {
+    "key": "consoleLogJson",
+    "prefix": "clp",
+    "body": ["console.log('${1:first}', JSON.parse(${1:first}, null, 2))"],
+    "description": "Logs parse JSON property with name.",
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
   "consoleTime": {
     "key": "consoleTime",
     "prefix": "ctm",
