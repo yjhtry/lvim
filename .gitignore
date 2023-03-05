@@ -1,4 +1,5 @@
 plugin/
+.Ds_Store
 
 lazy-lock.json
 lv-settings.lua

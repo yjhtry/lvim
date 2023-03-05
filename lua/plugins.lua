@@ -5,17 +5,6 @@ lvim.plugins = {
 		"catppuccin/nvim",
 		name = "catppuccin",
 	},
-	-- 会话管理插件
-	{
-		"folke/persistence.nvim",
-		event = "BufReadPre", -- this will only start session saving when an actual file was opened
-		config = function()
-			require("persistence").setup({
-				dir = vim.fn.expand(vim.fn.stdpath("config") .. "/session/"),
-				options = { "buffers", "curdir", "tabpages", "winsize" },
-			})
-		end,
-	},
 	{
 		"karb94/neoscroll.nvim",
 		event = "WinScrolled",
@@ -36,14 +25,6 @@ lvim.plugins = {
 	},
 	{
 		"tpope/vim-surround",
-	},
-	{
-		"iamcco/markdown-preview.nvim",
-		build = "cd app && npm install",
-		ft = "markdown",
-		config = function()
-			vim.g.mkdp_auto_start = 1
-		end,
 	},
 	{
 		"rmagatti/goto-preview",
@@ -128,28 +109,28 @@ lvim.plugins = {
 		lazy = true,
 		event = { "CursorMoved", "InsertEnter" },
 	},
-	{
-		"max397574/better-escape.nvim",
-		event = "BufReadPost",
-		config = function()
-			require("better_escape").setup({
-				mapping = { "jk", "jj" }, -- a table with mappings to use
-				timeout = 500, -- the time in which the keys must be hit in ms. Use option timeoutlen by default
-				clear_empty_lines = false, -- clear line after escaping if there is only whitespace
-				keys = "<Esc>", -- keys used for escaping, if it is a function will use the result everytime
-			})
-		end,
-	},
+	-- {
+	-- 	"max397574/better-escape.nvim",
+	-- 	event = "BufReadPost",
+	-- 	config = function()
+	-- 		require("better_escape").setup({
+	-- 			mapping = { "jk", "jj" }, -- a table with mappings to use
+	-- 			timeout = 500, -- the time in which the keys must be hit in ms. Use option timeoutlen by default
+	-- 			clear_empty_lines = false, -- clear line after escaping if there is only whitespace
+	-- 			keys = "<Esc>", -- keys used for escaping, if it is a function will use the result everytime
+	-- 		})
+	-- 	end,
+	-- },
 	{
 		"sindrets/diffview.nvim",
 		lazy = true,
 		cmd = { "DiffviewOpen", "DiffviewClose" },
 	},
 	{ "nvim-treesitter/nvim-treesitter-textobjects" },
-	{
-		"folke/trouble.nvim",
-		cmd = "TroubleToggle",
-	},
+	-- {
+	-- 	"folke/trouble.nvim",
+	-- 	cmd = "TroubleToggle",
+	-- },
 	{
 		"ggandor/leap.nvim",
 		-- event = "BufRead",
@@ -200,16 +181,16 @@ lvim.plugins = {
 	},
 	-- 下雨和生命周期游戏插件
 	{ "eandrju/cellular-automaton.nvim" },
-	{
-		"smjonas/inc-rename.nvim",
-		config = function()
-			require("inc_rename").setup()
-			vim.keymap.set("n", "<leader>rn", function()
-				return ":IncRename " .. vim.fn.expand("<cword>")
-			end, { expr = true, desc = "Rename" })
-			-- vim.keymap.set("n", "<leader>rn", ":IncRename ", { desc = "Rename" })
-		end,
-	},
+	-- {
+	-- 	"smjonas/inc-rename.nvim",
+	-- 	config = function()
+	-- 		require("inc_rename").setup()
+	-- 		vim.keymap.set("n", "<leader>rn", function()
+	-- 			return ":IncRename " .. vim.fn.expand("<cword>")
+	-- 		end, { expr = true, desc = "Rename" })
+	-- 		-- vim.keymap.set("n", "<leader>rn", ":IncRename ", { desc = "Rename" })
+	-- 	end,
+	-- },
 	-- 命令提示和搜索自动分词插件
 	{
 		"gelguy/wilder.nvim",
@@ -302,51 +283,6 @@ lvim.plugins = {
 				inline_messages = 0, -- " inline_message (0/1) is a one-line way to display messages
 				borders = "shadow", -- " display borders around floating windows
 			})
-		end,
-	},
-	-- 自动类型注释插件
-	{
-		"danymat/neogen",
-		dependencies = "nvim-treesitter/nvim-treesitter",
-		config = true,
-	},
-	{
-		"ThePrimeagen/refactoring.nvim",
-		dependencies = {
-			{ "nvim-lua/plenary.nvim" },
-			{ "nvim-treesitter/nvim-treesitter" },
-		},
-		config = function()
-			require("refactoring").setup({
-				prompt_func_return_type = {
-					go = false,
-					java = false,
-
-					cpp = false,
-					c = false,
-					h = false,
-					hpp = false,
-					cxx = false,
-				},
-				prompt_func_param_type = {
-					go = false,
-					java = false,
-
-					cpp = false,
-					c = false,
-					h = false,
-					hpp = false,
-					cxx = false,
-				},
-				printf_statements = {},
-				print_var_statements = {},
-			})
-		end,
-	},
-	{
-		"jcdickinson/wpm.nvim",
-		config = function()
-			require("wpm").setup({})
 		end,
 	},
 }

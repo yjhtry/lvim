@@ -100,17 +100,3 @@ require("lspconfig").tailwindcss.setup({
 		},
 	},
 })
-
-local wpm = require("wpm")
-local wpmConfig = { wpm.wpm, wpm.historic_graph }
-local components = require("lvim.core.lualine.components")
-
-lualine.options.theme = nil
-lualine.sections.lualine_x = {
-	wpm.wpm,
-	wpm.historic_graph,
-	components.diagnostics,
-	components.lsp,
-	components.spaces,
-	components.filetype,
-}
