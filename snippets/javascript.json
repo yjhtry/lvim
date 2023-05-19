@@ -1,4 +1,9 @@
 {
+  "nop": {
+    "prefix": "nop",
+    "body": ["// prettier-ignore", "$1", "// prettier-ignore-end"],
+    "description": "对象数组简单去重"
+  },
   "arrayDeduplication": {
     "prefix": "ad",
     "body": ["Array.from(new Set(data$0))"],

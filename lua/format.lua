@@ -1,6 +1,6 @@
 lvim.format_on_save = {
 	enabled = true,
-	pattern = "*.lua,*.js,*.tsx,*.ts,*.rs,*.json,*.html,*.cc",
+	pattern = "*.lua,*.js,*jsx,*.tsx,*.ts,*.rs,*.json,*.html,*.cc,*.py",
 	timeout = 2000,
 }
 
@@ -29,6 +29,12 @@ formatters.setup({
 		exe = "stylua",
 		filetypes = {
 			"lua",
+		},
+	},
+	{
+		exe = "isort",
+		filetypes = {
+			"python",
 		},
 	},
 })
