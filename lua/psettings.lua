@@ -23,11 +23,11 @@ ts.textobjects = {
 		enable = true,
 		set_jumps = true, -- whether to set jumps in the jumplist
 		goto_next_start = {
-			["]["] = "@function.outer",
+			["]]"] = "@function.outer",
 			["]m"] = "@class.outer",
 		},
 		goto_next_end = {
-			["]]"] = "@function.outer",
+			["]["] = "@function.outer",
 			["]M"] = "@class.outer",
 		},
 		goto_previous_start = {

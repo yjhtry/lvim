@@ -2,7 +2,7 @@
   "nop": {
     "prefix": "nop",
     "body": ["// prettier-ignore", "$1", "// prettier-ignore-end"],
-    "description": "对象数组简单去重"
+    "description": "禁用prettier"
   },
   "arrayDeduplication": {
     "prefix": "ad",
@@ -79,14 +79,14 @@
     "description": "一般的request请求处理"
   },
   "exportType": {
-    "body": ["export type ${1:first} = {${2:second}}"],
+    "body": ["export type ${1:first} = ${2:second}"],
     "key": "exportType",
-    "prefix": "exptp",
+    "prefix": "et",
     "scope": "typescript,typescriptreact,javascript,javascriptreact"
   },
   "exportInterface": {
     "key": "exportInterface",
-    "prefix": "expint",
+    "prefix": "ei",
     "body": ["export interface ${1:first} {${2:second}}"],
     "scope": "typescript,typescriptreact,javascript,javascriptreact"
   },
@@ -125,32 +125,11 @@
     "description": "Displays a message in the console and also includes a stack trace from where the method was called",
     "scope": "typescript,typescriptreact,javascript,javascriptreact"
   },
-  "consoleGroup": {
-    "key": "consoleGroup",
-    "prefix": "cgr",
-    "body": ["console.group('${1:first}')"],
-    "description": "Groups and indents all following output by an additional level, until console.groupEnd() is called.",
-    "scope": "typescript,typescriptreact,javascript,javascriptreact"
-  },
-  "consoleGroupEnd": {
-    "key": "consoleGroupEnd",
-    "prefix": "cge",
-    "body": ["console.groupEnd()"],
-    "description": "Closes out the corresponding console.group().",
-    "scope": "typescript,typescriptreact,javascript,javascriptreact"
-  },
   "consoleLog": {
     "key": "consoleLog",
     "prefix": "clg",
     "body": ["console.log(${1:first})"],
     "description": "Displays a message in the console",
-    "scope": "typescript,typescriptreact,javascript,javascriptreact"
-  },
-  "consoleTrace": {
-    "key": "consoleTrace",
-    "prefix": "ctr",
-    "body": ["console.trace(${1:first})"],
-    "description": "Prints a stack trace from the point where the method was called",
     "scope": "typescript,typescriptreact,javascript,javascriptreact"
   },
   "consoleLogObject": {
@@ -202,23 +181,10 @@
     "description": "Displays a message in the console but also displays a blue information icon along with the logged message",
     "scope": "typescript,typescriptreact,javascript,javascriptreact"
   },
-  "consoleTable": {
-    "key": "consoleTable",
-    "prefix": "ctl",
-    "body": ["console.table([${1:first}])"],
-    "description": "Logs table to console",
-    "scope": "typescript,typescriptreact,javascript,javascriptreact"
-  },
   "importAs": {
     "key": "importAs",
     "prefix": "ima",
     "body": ["import { ${2:second} as ${3:third} } from '${1:first}'"],
-    "scope": "typescript,typescriptreact,javascript,javascriptreact"
-  },
-  "importDestructing": {
-    "key": "importDestructing",
-    "prefix": "imd",
-    "body": ["import { ${2:second} } from '${1:first}'"],
     "scope": "typescript,typescriptreact,javascript,javascriptreact"
   },
   "importEverything": {
@@ -243,27 +209,6 @@
     "key": "importType",
     "prefix": "imt",
     "body": ["import type { ${2:second} } from '${1:first}'"],
-    "scope": "typescript,typescriptreact,javascript,javascriptreact"
-  },
-  "describeBlock": {
-    "key": "describeBlock",
-    "prefix": "desc",
-    "body": ["describe('${1:first}', () => { ${2:second} })"],
-    "description": "Testing `describe` block",
-    "scope": "typescript,typescriptreact,javascript,javascriptreact"
-  },
-  "itAsyncBlock": {
-    "key": "itAsyncBlock",
-    "prefix": "tita",
-    "body": ["it('should ${1:first}', async () => { ${2:second} })"],
-    "description": "Testing asynchronous `it` block",
-    "scope": "typescript,typescriptreact,javascript,javascriptreact"
-  },
-  "itBlock": {
-    "key": "itBlock",
-    "prefix": "tit",
-    "body": ["it('should ${1:first}', () => { ${2:second} })"],
-    "description": "Testing `it` block",
     "scope": "typescript,typescriptreact,javascript,javascriptreact"
   },
   "exportDefault": {
@@ -347,13 +292,6 @@
     "description": "Iterating over property values of iterable objects",
     "scope": "typescript,typescriptreact,javascript,javascriptreact"
   },
-  "anonymousFunction": {
-    "key": "anonymousFunction",
-    "prefix": "anfn",
-    "body": ["(${1:first}) => { ${2:second} }"],
-    "description": "Creates an anonymous function",
-    "scope": "typescript,typescriptreact,javascript,javascriptreact"
-  },
   "namedFunction": {
     "key": "namedFunction",
     "prefix": "nfn",
@@ -410,30 +348,9 @@
     "description": "Creates and returns a new Promise in the standard ES7 syntax",
     "scope": "typescript,typescriptreact,javascript,javascriptreact"
   },
-  "classConstructor": {
-    "key": "classConstructor",
-    "prefix": "rconst",
-    "body": [
-      "constructor(props) {",
-      "  super(props)",
-      "",
-      "  this.state = {",
-      "     ${1:first}",
-      "  }",
-      "}"
-    ],
-    "description": "Adds a default constructor for it('', () => {})the class that contains props as arguments",
-    "scope": "typescript,typescriptreact,javascript,javascriptreact"
-  },
-  "typeofSnippet": {
-    "key": "typeofSnippet",
-    "prefix": "tpf",
-    "body": ["typeof ${1:first}"],
-    "scope": "typescript,typescriptreact,javascript,javascriptreact"
-  },
-  "await sleep": {
-    "prefix": "ast",
-    "body": "await new Promise((r) => setTimeout(r, ${0}))"
+  "sleep": {
+    "prefix": "slp",
+    "body": "const sleep = (time = 1000) => new Promise((r) => setTimeout(r, time))"
   },
   "require": {
     "prefix": "rq",
@@ -475,10 +392,6 @@
     "prefix": "map",
     "body": "${1:iterable}.map((${2:item}) => {\n\t${0}\n})"
   },
-  "map single desctructured argument": {
-    "prefix": "mapsd",
-    "body": "${1:iterable}.map(({${2:item}}) => $3)"
-  },
   "const assignment awaited": {
     "prefix": "ca",
     "body": "const ${1:name} = await ${2:value}"
@@ -492,7 +405,7 @@
     "body": "const ${1:name} = ${2:value}"
   },
   "let assignment": {
-    "prefix": "l",
+    "prefix": "ll",
     "body": "let ${1:name} = ${2:value}"
   },
   "nextApi": {

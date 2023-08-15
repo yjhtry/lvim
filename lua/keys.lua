@@ -6,8 +6,10 @@ vim.keymap.set("n", "zM", require("ufo").closeAllFolds, { desc = "closeAllFolds"
 lvim.leader = "space"
 -- add your own keymapping
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
-lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
-lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
+-- lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
+-- lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
+lvim.keys.normal_mode["<S-l>"] = "g_"
+lvim.keys.normal_mode["<S-h>"] = "^"
 lvim.keys.normal_mode["J"] = "5j"
 lvim.keys.normal_mode["K"] = "5k"
 lvim.keys.normal_mode["<A-J>"] = ":copy .<CR>=="
@@ -17,6 +19,8 @@ lvim.keys.visual_mode["J"] = "5j"
 lvim.keys.visual_mode["K"] = "5k"
 lvim.keys.visual_mode["<A-J>"] = ":copy '><CR>=="
 lvim.keys.visual_mode["<A-K>"] = ":copy '<-1<CR>=="
+lvim.keys.visual_mode["<S-l>"] = "g_"
+lvim.keys.visual_mode["<S-h>"] = "^"
 
 lvim.keys.insert_mode["<A-J>"] = "<Esc>:copy .<CR>==gi"
 lvim.keys.insert_mode["<A-K>"] = "<Esc>:copy .-1<CR>==gi"
@@ -41,9 +45,6 @@ lvim.builtin.which_key.mappings["f"] = {
 	name = "Local search",
 	f = { "<cmd>Telescope git_files<cr>", "Git File" },
 	w = { "<cmd>Telescope current_buffer_fuzzy_find<cr>", "Local Word" },
-	-- r = { "<cmd>Telescope lsp_references<cr>", "References" },
-	-- s = { "<cmd>Telescope lsp_document_symbols<cr>", "Symbols" },
-	-- R = { "<cmd>Telescope frecency<cr>", "frecency" },
 }
 
 lvim.builtin.which_key.mappings[" "] = {

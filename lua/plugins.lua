@@ -245,26 +245,4 @@ lvim.plugins = {
 			)
 		end,
 	},
-	{
-		"michaelb/sniprun",
-		build = "bash ./install.sh",
-		cmd = { "SnipRun", "SnipLive" },
-		lazy = true,
-		config = function()
-			require("sniprun").setup({
-				selected_interpreters = {}, -- " use those instead of the default for the current filetype
-				repl_enable = {}, -- " enable REPL-like behavior for the given interpreters
-				repl_disable = {}, -- " disable REPL-like behavior for the given interpreters
-				interpreter_options = {}, -- " intepreter-specific options, consult docs / :SnipInfo <name>
-				display = {
-					"Classic", -- "display results in the command-line  area
-					"VirtualTextOk", -- "display ok results as virtual text (multiline is shortened)
-					"VirtualTextErr", -- "display error results as virtual text
-					"LongTempFloatingWindow", -- "same as above, but only long results. To use with VirtualText__
-				},
-				inline_messages = 0, -- " inline_message (0/1) is a one-line way to display messages
-				borders = "shadow", -- " display borders around floating windows
-			})
-		end,
-	},
 }

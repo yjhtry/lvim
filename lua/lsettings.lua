@@ -1,5 +1,5 @@
 lvim.log.level = "warn"
--- lvim.transparent_window = true
+lvim.transparent_window = true
 lvim.colorscheme = "catppuccin-mocha"
 
 lvim.builtin.alpha.active = true
