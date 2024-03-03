@@ -114,26 +114,73 @@ lvim.plugins = {
 	-- 	"folke/trouble.nvim",
 	-- 	cmd = "TroubleToggle",
 	-- },
+	-- {
+	-- 	"ggandor/leap.nvim",
+	-- 	-- event = "BufRead",
+	-- 	config = function()
+	-- 		require("leap").add_default_mappings()
+	-- 	end,
+	-- },
+	-- {
+	-- 	"ggandor/flit.nvim",
+	-- 	-- event = "BufRead",
+	-- 	config = function()
+	-- 		require("flit").setup({
+	-- 			keys = { f = "f", F = "F", t = "t", T = "T" },
+	-- 			labeled_modes = "v",
+	-- 			multiline = true,
+	-- 			opts = {},
+	-- 		})
+	-- 	end,
+	-- },
+	-- { "tpope/vim-repeat" },
 	{
-		"ggandor/leap.nvim",
-		-- event = "BufRead",
-		config = function()
-			require("leap").add_default_mappings()
-		end,
+		"folke/flash.nvim",
+		event = "VeryLazy",
+		opts = {},
+		keys = {
+			{
+				"s",
+				mode = { "n", "o", "x" },
+				function()
+					require("flash").jump()
+				end,
+				desc = "Flash",
+			},
+			{
+				"S",
+				mode = { "n", "o", "x" },
+				function()
+					require("flash").treesitter()
+				end,
+				desc = "Flash Treesitter",
+			},
+			{
+				"r",
+				mode = "o",
+				function()
+					require("flash").remote()
+				end,
+				desc = "Remote Flash",
+			},
+			{
+				"R",
+				mode = { "o", "x" },
+				function()
+					require("flash").treesitter_search()
+				end,
+				desc = "Treesitter Search",
+			},
+			{
+				"<c-s>",
+				mode = { "c" },
+				function()
+					require("flash").toggle()
+				end,
+				desc = "Toggle Flash Search",
+			},
+		},
 	},
-	{
-		"ggandor/flit.nvim",
-		-- event = "BufRead",
-		config = function()
-			require("flit").setup({
-				keys = { f = "f", F = "F", t = "t", T = "T" },
-				labeled_modes = "v",
-				multiline = true,
-				opts = {},
-			})
-		end,
-	},
-	{ "tpope/vim-repeat" },
 	{
 		"simrat39/rust-tools.nvim",
 		config = function()
@@ -162,7 +209,7 @@ lvim.plugins = {
 		end,
 	},
 	-- 下雨和生命周期游戏插件
-	{ "eandrju/cellular-automaton.nvim" },
+	-- { "eandrju/cellular-automaton.nvim" },
 	-- {
 	-- 	"smjonas/inc-rename.nvim",
 	-- 	config = function()
@@ -245,4 +292,5 @@ lvim.plugins = {
 			)
 		end,
 	},
+	{ "wakatime/vim-wakatime" },
 }

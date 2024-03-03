@@ -1,6 +1,5 @@
 local ts = lvim.builtin.treesitter
 local telescope = lvim.builtin.telescope
-local lualine = lvim.builtin.lualine
 
 ts.autotag = { enable = true }
 
@@ -72,7 +71,9 @@ telescope.defaults.layout_config = {
 	preview_cutoff = 120,
 }
 
-require("lspconfig").lua_ls.setup({
+local lspconfig = require("lspconfig")
+
+lspconfig.lua_ls.setup({
 	settings = {
 		Lua = {
 			runtime = {
@@ -86,17 +87,11 @@ require("lspconfig").lua_ls.setup({
 	},
 })
 
-require("lspconfig").tailwindcss.setup({
-	settings = {
-		tailwindCSS = {
-			experimental = {
-				classRegex = {
-					"cn\\('([^)]*)\\')",
-					-- "'([^']*)'",
-					"cva\\(([^)]*)\\)",
-					-- "[\"'`]([^\"'`]*).*?[\"'`]",
-				},
-			},
-		},
-	},
+lspconfig.denols.setup({
+	root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
 })
+
+-- lspconfig.tsserver.setup({
+-- 	root_dir = lspconfig.util.root_pattern("package.json"),
+-- 	single_file_support = true,
+-- })

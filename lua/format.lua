@@ -1,6 +1,6 @@
 lvim.format_on_save = {
 	enabled = true,
-	pattern = "*.lua,*.js,*jsx,*.tsx,*.ts,*.rs,*.json,*.html,*.cc,*.py",
+	pattern = "*.lua,*.js,*jsx,*.tsx,*.ts,*.rs,*.json,*.html,*.cc,*.py,*go",
 	timeout = 2000,
 }
 
@@ -35,6 +35,12 @@ formatters.setup({
 		exe = "isort",
 		filetypes = {
 			"python",
+		},
+	},
+	{
+		exe = "gofumpt",
+		filetypes = {
+			"go",
 		},
 	},
 })

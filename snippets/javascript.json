@@ -394,19 +394,19 @@
   },
   "const assignment awaited": {
     "prefix": "ca",
-    "body": "const ${1:name} = await ${2:value}"
+    "body": "const ${2:name} = await ${1:value}"
   },
   "let assignment awaited": {
     "prefix": "la",
-    "body": "let ${1:name} = await ${2:value}"
+    "body": "let ${2:name} = await ${1:value}"
   },
   "const assignment": {
     "prefix": "c",
-    "body": "const ${1:name} = ${2:value}"
+    "body": "const ${2:name} = ${1:value}"
   },
   "let assignment": {
     "prefix": "ll",
-    "body": "let ${1:name} = ${2:value}"
+    "body": "let ${2:name} = ${1:value}"
   },
   "nextApi": {
     "prefix": "napi",
